@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./frontend # Adjust if your path differs (e.g., client)
+        working-directory: ./frontend
 
     steps:
       - name: Checkout repository
@@ -49,7 +49,7 @@ jobs:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: ./backend # Adjust if your path differs (e.g., server)
+        working-directory: ./backend
 
     # Database Service Container for Node tests
     services:
@@ -57,13 +57,13 @@ jobs:
         image: postgres:16-alpine
         env:
           POSTGRES_USER: test_user
-          POSTGRES_PASSWORD: test_password
+          POSTGRES_PASSWORD: "test_password"
           POSTGRES_DB: task_dashboard_test
         ports:
           - 5432:5432
         options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
+          --health-cmd "pg_isready -U test_user -d task_dashboard_test"
+          --health-interval 5s
           --health-timeout 5s
           --health-retries 5
 
@@ -84,17 +84,16 @@ jobs:
       - name: Run ESLint
         run: npm run lint
 
-      - name: Run Seed Script (Optional setup)
+      - name: Run Seed Script
         env:
           DB_HOST: localhost
           DB_PORT: 5432
           DB_USER: test_user
-          DB_PASSWORD: test_password
+          DB_PASSWORD: "test_password"
           DB_NAME: task_dashboard_test
+          DATABASE_URL: "postgresql://test_user:test_password@localhost:5432/task_dashboard_test"
           JWT_SECRET: ci_test_secret_12345
-        run: |
-          # Only run if your seeder sets up mandatory schema tables
-          npm run seed || true
+        run: npm run seed || true
 
       - name: Execute API Integration Tests
         env:
@@ -103,7 +102,8 @@ jobs:
           DB_HOST: localhost
           DB_PORT: 5432
           DB_USER: test_user
-          DB_PASSWORD: test_password
+          DB_PASSWORD: "test_password"
           DB_NAME: task_dashboard_test
+          DATABASE_URL: "postgresql://test_user:test_password@localhost:5432/task_dashboard_test"
           JWT_SECRET: ci_test_secret_12345
         run: npm test

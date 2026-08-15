@@ -1,10 +1,19 @@
 const { Pool } = require('pg');
 require('dotenv').config();
 
-const connectionString = process.env.DATABASE_URL || 'postgresql://postgres@localhost:5432/task_dashboard';
+// Build pool config supporting both DATABASE_URL or individual DB_* variables safely
+const poolConfig = process.env.DATABASE_URL
+  ? { connectionString: process.env.DATABASE_URL }
+  : {
+      host: process.env.DB_HOST || 'localhost',
+      port: parseInt(process.env.DB_PORT || '5432', 10),
+      user: process.env.DB_USER || 'postgres',
+      password: String(process.env.DB_PASSWORD || ''), // Coerce to string to avoid SASL numeric crashes
+      database: process.env.DB_NAME || 'task_dashboard',
+    };
 
 const pool = new Pool({
-  connectionString,
+  ...poolConfig,
   max: 20,
   idleTimeoutMillis: 30000,
   connectionTimeoutMillis: 5000,
