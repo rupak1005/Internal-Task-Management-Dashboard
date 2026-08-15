@@ -2,7 +2,7 @@
 
 A modular, scalable, and resilient **Internal Task & Operations Management Platform** engineered with Node.js (Express), PostgreSQL, React 18, Vite, and Tailwind CSS. Built with clean architecture principles, database-level pagination/filtering, automated CI/CD validation, and full containerization support.
 
-# Loom Walkthrough: https://www.loom.com/share/747a3da6b4fd4c79942452098bf7921f
+Loom Walkthrough: https://www.loom.com/share/747a3da6b4fd4c79942452098bf7921f
 
 ---
 
