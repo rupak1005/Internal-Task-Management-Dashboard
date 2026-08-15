@@ -66,21 +66,21 @@ export function ExternalUsersPage() {
   });
 
   return (
-    <div className="space-y-6 animate-fade-in">
+    <div className="space-y-6 animate-fade-in pb-8">
       {/* Page Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
           <div className="flex items-center gap-2">
             <h1 className="text-2xl font-bold tracking-tight text-slate-900">
-              Team Directory & External Integration
+              Team Directory & External Sync
             </h1>
-            <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 flex items-center gap-1">
+            <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 flex items-center gap-1.5 shadow-sm">
               <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-              <span>External API Synced</span>
+              <span>External API Active</span>
             </span>
           </div>
           <p className="text-sm text-slate-500 mt-1">
-            Connected via JSONPlaceholder enterprise gateway with automated retry and data mapping.
+            Connected via JSONPlaceholder enterprise gateway with automated retry and response transformation.
           </p>
         </div>
 
@@ -99,7 +99,7 @@ export function ExternalUsersPage() {
 
       {/* Warning / Offline Cache Banner if applicable */}
       {warning && (
-        <div className="p-4 rounded-xl bg-amber-50 border border-amber-200 flex items-start gap-3 text-xs text-amber-800">
+        <div className="p-4 rounded-2xl bg-amber-50 border border-amber-200/90 flex items-start gap-3 text-xs text-amber-900 shadow-sm">
           <AlertCircle className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
           <div className="flex-1">
             <span className="font-semibold">Resilient Fallback Mode Active: </span>
@@ -117,16 +117,16 @@ export function ExternalUsersPage() {
       )}
 
       {/* Search & Department Filters */}
-      <div className="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200 shadow-sm space-y-4">
+      <div className="bg-white p-4 sm:p-5 rounded-2xl border border-slate-200/90 shadow-sm space-y-4">
         <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
           <div className="relative flex-1">
             <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-400" />
             <input
               type="text"
-              placeholder="Search team members by name, company, email..."
+              placeholder="Search directory by name, company, email..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full text-sm rounded-xl border border-slate-300 bg-slate-50/50 pl-10 pr-4 py-2.5 text-slate-900 placeholder-slate-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
+              className="w-full text-sm rounded-xl border border-slate-300/90 bg-slate-50/60 pl-10 pr-4 py-2.5 text-slate-900 placeholder-slate-400 focus:bg-white focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
             />
           </div>
         </div>
@@ -138,7 +138,7 @@ export function ExternalUsersPage() {
             <button
               key={dept}
               onClick={() => setDepartmentFilter(dept === 'All' ? '' : dept)}
-              className={`text-xs px-3 py-1 rounded-full font-medium transition-all ${
+              className={`text-xs px-3 py-1.5 rounded-full font-medium transition-all cursor-pointer ${
                 (!departmentFilter && dept === 'All') || departmentFilter === dept
                   ? 'bg-blue-600 text-white shadow-sm shadow-blue-500/20 font-semibold'
                   : 'bg-slate-100 text-slate-600 hover:bg-slate-200/80 hover:text-slate-900'
@@ -178,7 +178,7 @@ export function ExternalUsersPage() {
           {filteredUsers.map((user) => (
             <div
               key={user.id}
-              className="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-md hover:border-slate-300 transition-all p-6 flex flex-col justify-between space-y-5 group"
+              className="bg-white rounded-2xl border border-slate-200/90 shadow-sm hover:shadow-md hover:border-slate-300 transition-all p-6 flex flex-col justify-between space-y-5 group"
             >
               <div>
                 {/* User Header */}
@@ -203,7 +203,7 @@ export function ExternalUsersPage() {
                 </div>
 
                 {/* Company Context */}
-                <div className="mt-4 p-3 rounded-xl bg-slate-50/80 border border-slate-100 space-y-1">
+                <div className="mt-4 p-3.5 rounded-xl bg-slate-50/80 border border-slate-100 space-y-1">
                   <div className="flex items-center gap-1.5 text-xs font-semibold text-slate-800">
                     <Building2 className="w-3.5 h-3.5 text-blue-600" />
                     <span>{user.companyName}</span>

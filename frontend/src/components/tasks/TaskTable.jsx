@@ -23,18 +23,18 @@ export function TaskTable({
       sortable: true,
       className: 'font-medium text-slate-900 max-w-xs sm:max-w-md',
       render: (task) => (
-        <div className="space-y-1">
+        <div className="space-y-1 py-0.5">
           <div
             onClick={(e) => {
               e.stopPropagation();
               onSelectTask(task.id);
             }}
-            className="font-semibold text-slate-900 hover:text-blue-600 cursor-pointer line-clamp-1 transition-colors"
+            className="font-semibold text-slate-900 hover:text-blue-600 cursor-pointer line-clamp-1 transition-colors text-sm"
           >
             {task.title}
           </div>
           {task.description && (
-            <div className="text-xs text-slate-500 line-clamp-1">{task.description}</div>
+            <div className="text-xs text-slate-500 line-clamp-1 leading-normal">{task.description}</div>
           )}
         </div>
       )
@@ -48,7 +48,7 @@ export function TaskTable({
           <select
             value={task.status}
             onChange={(e) => onPatchStatus(task.id, e.target.value)}
-            className="text-xs rounded-full font-medium px-2.5 py-1 border border-slate-200 bg-white hover:border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500/20 cursor-pointer shadow-sm transition-all"
+            className="text-xs rounded-full font-medium px-3 py-1 border border-slate-200/90 bg-white hover:border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500/20 cursor-pointer shadow-sm transition-all"
           >
             {STATUS_OPTIONS.filter((o) => o.value).map((opt) => (
               <option key={opt.value} value={opt.value}>
@@ -82,7 +82,7 @@ export function TaskTable({
               {task.assignee_name ? task.assignee_name.charAt(0) : <User className="w-3 h-3" />}
             </div>
           )}
-          <span className="text-xs text-slate-700 font-medium">
+          <span className="text-xs text-slate-700 font-medium truncate max-w-[120px]">
             {task.assignee_name || <span className="text-slate-400 italic">Unassigned</span>}
           </span>
         </div>
@@ -90,7 +90,7 @@ export function TaskTable({
     },
     {
       field: 'due_date',
-      header: 'Due Date',
+      header: 'Due Deadline',
       sortable: true,
       render: (task) => {
         const dueInfo = getDueDateStatus(task.due_date, task.status);
@@ -101,7 +101,7 @@ export function TaskTable({
 
         return (
           <div className="flex items-center gap-1.5 text-xs">
-            <Calendar className="w-3.5 h-3.5 text-slate-400" />
+            <Calendar className="w-3.5 h-3.5 text-slate-400 shrink-0" />
             <span
               className={`font-medium ${
                 dueInfo.variant === 'overdue'
@@ -119,7 +119,7 @@ export function TaskTable({
     },
     {
       field: 'comments',
-      header: 'Activity',
+      header: 'Notes',
       sortable: false,
       render: (task) => (
         <div
@@ -130,7 +130,7 @@ export function TaskTable({
           className="flex items-center gap-1 text-xs text-slate-500 hover:text-blue-600 cursor-pointer"
         >
           <MessageSquare className="w-3.5 h-3.5" />
-          <span className="font-medium">{task.comments_count || 0}</span>
+          <span className="font-medium tabular-nums">{task.comments_count || 0}</span>
         </div>
       )
     },
@@ -147,7 +147,7 @@ export function TaskTable({
             size="sm"
             onClick={() => onSelectTask(task.id)}
             className="p-1.5 text-slate-500 hover:text-blue-600"
-            title="View Details"
+            title="View Details & Discussion"
           >
             <Eye className="w-4 h-4" />
           </Button>
