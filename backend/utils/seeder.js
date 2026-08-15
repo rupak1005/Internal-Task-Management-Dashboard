@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const bcrypt = require('bcryptjs');
 const { query, initDatabase, pool } = require('../database/database');
 
 async function seed() {
@@ -15,20 +16,24 @@ async function seed() {
   const seedData = JSON.parse(fs.readFileSync(seedFilePath, 'utf8'));
 
   // Clean existing data for fresh seed
-  await query('TRUNCATE TABLE comments, tasks, users RESTART IDENTITY CASCADE;');
+  await query('TRUNCATE TABLE audit_logs, comments, tasks, users RESTART IDENTITY CASCADE;');
+
+  const defaultPasswordHash = bcrypt.hashSync('password123', 10);
 
   // 1. Insert Users
   const userMap = new Map(); // email -> user_id
+  const userObjectMap = new Map();
   for (const u of seedData.users) {
     const res = await query(
-      `INSERT INTO users (name, email, role, avatar_url)
-       VALUES ($1, $2, $3, $4)
-       RETURNING id, email`,
-      [u.name, u.email, u.role || 'Member', u.avatar_url || null]
+      `INSERT INTO users (name, email, password_hash, role, avatar_url)
+       VALUES ($1, $2, $3, $4, $5)
+       RETURNING id, name, email, role, avatar_url`,
+      [u.name, u.email, defaultPasswordHash, u.role || 'Member', u.avatar_url || null]
     );
     userMap.set(res.rows[0].email, res.rows[0].id);
+    userObjectMap.set(res.rows[0].id, res.rows[0]);
   }
-  console.log(`[Seeder]: Inserted ${seedData.users.length} users.`);
+  console.log(`[Seeder]: Inserted ${seedData.users.length} users with password 'password123'.`);
 
   // 2. Insert Tasks
   const taskIds = [];
@@ -53,15 +58,33 @@ async function seed() {
        RETURNING id`,
       [t.title, t.description || '', t.status || 'pending', t.priority || 'medium', assignedId, dueDate]
     );
-    taskIds.push(res.rows[0].id);
+    const taskId = res.rows[0].id;
+    taskIds.push(taskId);
+
+    // Initial audit log for task creation
+    const adminUser = userObjectMap.get(1) || { name: 'Alex Morgan', avatar_url: null };
+    await query(
+      `INSERT INTO audit_logs (task_id, user_id, user_name, user_avatar, action, details, new_values)
+       VALUES ($1, $2, $3, $4, $5, $6, $7)`,
+      [
+        taskId,
+        1,
+        adminUser.name,
+        adminUser.avatar_url,
+        'CREATED',
+        `Task "${t.title}" created with status ${t.status || 'pending'} and priority ${t.priority || 'medium'}.`,
+        JSON.stringify({ status: t.status, priority: t.priority, title: t.title })
+      ]
+    );
   }
-  console.log(`[Seeder]: Inserted ${seedData.tasks.length} tasks.`);
+  console.log(`[Seeder]: Inserted ${seedData.tasks.length} tasks and audit logs.`);
 
   // 3. Insert Comments
   let commentCount = 0;
   for (const c of seedData.comments) {
     const taskId = taskIds[c.task_index];
     const userId = userMap.get(c.user_email);
+    const userObj = userObjectMap.get(userId);
 
     if (taskId && userId) {
       await query(
@@ -70,6 +93,22 @@ async function seed() {
         [taskId, userId, c.comment]
       );
       commentCount++;
+
+      // Audit log for comment
+      if (userObj) {
+        await query(
+          `INSERT INTO audit_logs (task_id, user_id, user_name, user_avatar, action, details)
+           VALUES ($1, $2, $3, $4, $5, $6)`,
+          [
+            taskId,
+            userId,
+            userObj.name,
+            userObj.avatar_url,
+            'NOTE_ADDED',
+            `Added note: "${c.comment.substring(0, 50)}${c.comment.length > 50 ? '...' : ''}"`
+          ]
+        );
+      }
     }
   }
   console.log(`[Seeder]: Inserted ${commentCount} comments.`);

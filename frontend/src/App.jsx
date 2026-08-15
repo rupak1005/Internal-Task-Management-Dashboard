@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { AuthProvider, useAuth } from './context/AuthContext';
 import { UserProvider } from './context/UserContext';
 import { ToastProvider, useToast } from './context/ToastContext';
 import { Layout } from './components/layout/Layout';
@@ -6,14 +7,17 @@ import { DashboardPage } from './pages/DashboardPage';
 import { TasksPage } from './pages/TasksPage';
 import { TaskDetailPage } from './pages/TaskDetailPage';
 import { ExternalUsersPage } from './pages/ExternalUsersPage';
+import { AuditLogsPage } from './pages/AuditLogsPage';
 import { TaskModal } from './components/tasks/TaskModal';
 import { TaskDetailDrawer } from './components/tasks/TaskDetailDrawer';
 import { ConfirmModal } from './components/common/ConfirmModal';
+import { AuthModal } from './components/auth/AuthModal';
 import { useTasks } from './hooks/useTasks';
 import { tasksService } from './services/tasks.service';
 
 function DashboardApp() {
   const toast = useToast();
+  const { isAdmin } = useAuth();
   const tasksHook = useTasks();
   const { refetch: refetchTasks, pagination } = tasksHook;
 
@@ -28,13 +32,16 @@ function DashboardApp() {
   const [editingTask, setEditingTask] = useState(null);
   const [isSubmittingTask, setIsSubmittingTask] = useState(false);
 
+  // Auth modal
+  const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+
   // Delete modal states
   const [deletingTask, setDeletingTask] = useState(null);
   const [isDeletingTask, setIsDeletingTask] = useState(false);
 
   // Handlers
-  const handleOpenCreateTask = () => {
-    setEditingTask(null);
+  const handleOpenCreateTask = (initialOverrides = null) => {
+    setEditingTask(initialOverrides ? { ...initialOverrides } : null);
     setIsTaskModalOpen(true);
   };
 
@@ -136,7 +143,8 @@ function DashboardApp() {
         setSelectedTaskId(null);
       }}
       counts={{ total: pagination.total }}
-      onOpenCreateTask={handleOpenCreateTask}
+      onOpenCreateTask={() => handleOpenCreateTask()}
+      onOpenAuthModal={() => setIsAuthModalOpen(true)}
     >
       {/* Page Switching */}
       {selectedTaskId ? (
@@ -151,7 +159,7 @@ function DashboardApp() {
         <DashboardPage
           onSelectTab={setCurrentTab}
           onSelectTask={handleSelectTask}
-          onOpenCreateTask={handleOpenCreateTask}
+          onOpenCreateTask={() => handleOpenCreateTask()}
           onFilterByStatus={handleFilterByStatus}
         />
       ) : currentTab === 'tasks' ? (
@@ -164,6 +172,8 @@ function DashboardApp() {
         />
       ) : currentTab === 'external-users' ? (
         <ExternalUsersPage />
+      ) : currentTab === 'audit-logs' ? (
+        <AuditLogsPage onSelectTask={handleSelectTask} />
       ) : null}
 
       {/* Create / Edit Task Modal */}
@@ -190,9 +200,21 @@ function DashboardApp() {
           setIsDrawerOpen(false);
           handleOpenEditTask(task);
         }}
-        onDelete={(task) => setDeletingTask(task)}
+        onDelete={(task) => {
+          if (!isAdmin) {
+            toast.error('Only Admins can delete tasks');
+            return;
+          }
+          setDeletingTask(task);
+        }}
         onPatchStatus={handlePatchStatusInDrawer}
         onAddComment={handleAddCommentToDrawer}
+      />
+
+      {/* Auth Modal (Login / Register / Demo) */}
+      <AuthModal
+        isOpen={isAuthModalOpen}
+        onClose={() => setIsAuthModalOpen(false)}
       />
 
       {/* Delete Confirmation Modal */}
@@ -201,7 +223,7 @@ function DashboardApp() {
         onClose={() => setDeletingTask(null)}
         onConfirm={handleConfirmDelete}
         title="Delete Task"
-        message={`Are you sure you want to permanently remove "${deletingTask?.title}"? All associated comments and activity will be removed.`}
+        message={`Are you sure you want to permanently remove "${deletingTask?.title}"? This action is recorded in the system audit logs.`}
         confirmText="Delete Task"
         variant="danger"
         isLoading={isDeletingTask}
@@ -213,9 +235,11 @@ function DashboardApp() {
 export default function App() {
   return (
     <ToastProvider>
-      <UserProvider>
-        <DashboardApp />
-      </UserProvider>
+      <AuthProvider>
+        <UserProvider>
+          <DashboardApp />
+        </UserProvider>
+      </AuthProvider>
     </ToastProvider>
   );
 }

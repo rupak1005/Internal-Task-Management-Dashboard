@@ -1,51 +1,23 @@
-import { createContext, useContext, useState, useEffect, useCallback } from 'react';
-import { usersService } from '../services/users.service';
+import { createContext, useContext } from 'react';
+import { useAuth } from './AuthContext';
 
 const UserContext = createContext(null);
 
 export function UserProvider({ children }) {
-  const [users, setUsers] = useState([]);
-  const [currentUser, setCurrentUser] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-
-  const fetchUsers = useCallback(async () => {
-    try {
-      setLoading(true);
-      const data = await usersService.getUsers();
-      setUsers(data);
-      if (data.length > 0) {
-        setCurrentUser((prev) => prev || data[0]); // Default to first user (Sarah Chen - Admin)
-      }
-      setError(null);
-    } catch (err) {
-      console.error('Failed to load team users:', err);
-      setError(err.message);
-    } finally {
-      setLoading(false);
-    }
-  }, []);
-
-  useEffect(() => {
-    fetchUsers();
-  }, [fetchUsers]);
-
-  const switchUser = (userId) => {
-    const found = users.find((u) => u.id === Number(userId));
-    if (found) {
-      setCurrentUser(found);
-    }
-  };
+  const auth = useAuth();
 
   return (
     <UserContext.Provider
       value={{
-        users,
-        currentUser,
-        loading,
-        error,
-        switchUser,
-        refreshUsers: fetchUsers
+        users: auth.users,
+        currentUser: auth.user,
+        loading: auth.loading,
+        error: null,
+        switchUser: auth.switchUser,
+        refreshUsers: () => {},
+        isAdmin: auth.isAdmin,
+        isMember: auth.isMember,
+        canDeleteTask: auth.canDeleteTask
       }}
     >
       {children}

@@ -2,10 +2,14 @@ import {
   LayoutDashboard,
   CheckSquare,
   Globe2,
-  Layers
+  Layers,
+  Shield
 } from 'lucide-react';
+import { useAuth } from '../../context/AuthContext';
 
 export function Sidebar({ currentTab, onSelectTab, counts = {}, isMobileOpen, onCloseMobile }) {
+  const { isAdmin } = useAuth();
+
   const navItems = [
     {
       id: 'dashboard',
@@ -24,7 +28,17 @@ export function Sidebar({ currentTab, onSelectTab, counts = {}, isMobileOpen, on
       label: 'Team & External Sync',
       icon: Globe2,
       badge: 'Live'
-    }
+    },
+    ...(isAdmin
+      ? [
+          {
+            id: 'audit-logs',
+            label: 'Audit & Compliance',
+            icon: Shield,
+            badge: 'Admin'
+          }
+        ]
+      : [])
   ];
 
   return (
@@ -61,7 +75,7 @@ export function Sidebar({ currentTab, onSelectTab, counts = {}, isMobileOpen, on
 
         {/* Navigation Menu */}
         <div className="flex-1 py-6 px-3 space-y-1 overflow-y-auto">
-          <div className="px-3 pb-2 text-[11px] font-semibold uppercase tracking-wider text-slate-300">
+          <div className="px-3 pb-2 text-[11px] font-semibold uppercase tracking-wider text-slate-400">
             Navigation
           </div>
 
@@ -76,7 +90,7 @@ export function Sidebar({ currentTab, onSelectTab, counts = {}, isMobileOpen, on
                   onSelectTab(item.id);
                   if (onCloseMobile) onCloseMobile();
                 }}
-                className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all duration-150 group ${
+                className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all duration-150 group cursor-pointer ${
                   isActive
                     ? 'bg-blue-600 text-white shadow-md shadow-blue-600/30 font-semibold'
                     : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/60'
@@ -96,6 +110,8 @@ export function Sidebar({ currentTab, onSelectTab, counts = {}, isMobileOpen, on
                     className={`text-xs px-2 py-0.5 rounded-full font-medium ${
                       isActive
                         ? 'bg-white/20 text-white'
+                        : item.badge === 'Admin'
+                        ? 'bg-purple-500/20 text-purple-300 border border-purple-500/30'
                         : item.badge === 'Live'
                         ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30'
                         : 'bg-slate-800 text-slate-400 group-hover:bg-slate-700'
@@ -115,7 +131,7 @@ export function Sidebar({ currentTab, onSelectTab, counts = {}, isMobileOpen, on
             <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
             <span>PostgreSQL & API Connected</span>
           </div>
-          <p className="text-[11px] text-slate-300 leading-relaxed">
+          <p className="text-[11px] text-slate-400 leading-relaxed">
             REST service healthy on port 8000
           </p>
         </div>

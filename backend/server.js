@@ -4,12 +4,15 @@ const cors = require('cors');
 const { initDatabase } = require('./database/database');
 const { requestLogger } = require('./utils/logger');
 const { errorHandler, notFoundHandler } = require('./utils/errorHandler');
+const { setupSwagger } = require('./docs/swagger');
 
 // Route Imports
+const authRouter = require('./routes/auth.routes');
 const tasksRouter = require('./routes/tasks.routes');
 const usersRouter = require('./routes/users.routes');
 const dashboardRouter = require('./routes/dashboard.routes');
 const externalRouter = require('./routes/external.routes');
+const auditRouter = require('./routes/audit.routes');
 
 const app = express();
 const PORT = process.env.PORT || 8000;
@@ -32,11 +35,16 @@ app.get('/health', (req, res) => {
   });
 });
 
+// Setup Swagger UI Documentation at /api/docs
+setupSwagger(app);
+
 // API Routes
+app.use('/api/auth', authRouter);
 app.use('/api/dashboard', dashboardRouter);
 app.use('/api/tasks', tasksRouter);
 app.use('/api/users', usersRouter);
 app.use('/api/external', externalRouter);
+app.use('/api/audit-logs', auditRouter);
 
 // 404 and Global Error Handlers
 app.use(notFoundHandler);
@@ -50,8 +58,11 @@ async function startServer() {
       console.log(`=========================================`);
       console.log(`🚀 Task Management API running on port ${PORT}`);
       console.log(`📊 Health Check: http://localhost:${PORT}/health`);
+      console.log(`📖 Swagger Docs: http://localhost:${PORT}/api/docs`);
+      console.log(`🔐 Auth API:     http://localhost:${PORT}/api/auth`);
       console.log(`📋 Dashboard:    http://localhost:${PORT}/api/dashboard`);
       console.log(`📌 Tasks API:    http://localhost:${PORT}/api/tasks`);
+      console.log(`📜 Audit Logs:   http://localhost:${PORT}/api/audit-logs`);
       console.log(`👥 Users API:    http://localhost:${PORT}/api/users`);
       console.log(`🌐 External API: http://localhost:${PORT}/api/external/users`);
       console.log(`=========================================`);
