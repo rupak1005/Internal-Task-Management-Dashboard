@@ -1,4 +1,3 @@
-import React from 'react';
 import { PRIORITY_CONFIG } from '../../utils/constants';
 import { ArrowDown, Minus, ArrowUp, AlertTriangle } from 'lucide-react';
 

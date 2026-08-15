@@ -1,10 +1,8 @@
-import React from 'react';
-import { StatusBadge } from '../common/StatusBadge';
 import { PriorityBadge } from '../common/PriorityBadge';
 import { Table } from '../common/Table';
-import { getDueDateStatus, formatDate } from '../../utils/formatters';
+import { getDueDateStatus } from '../../utils/formatters';
 import { STATUS_OPTIONS } from '../../utils/constants';
-import { MessageSquare, MoreVertical, Edit2, Trash2, Eye, Calendar, User } from 'lucide-react';
+import { MessageSquare, Edit2, Trash2, Eye, Calendar, User } from 'lucide-react';
 import { Button } from '../common/Button';
 
 export function TaskTable({

@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { UserProvider, useUser } from './context/UserContext';
+import { useState } from 'react';
+import { UserProvider } from './context/UserContext';
 import { ToastProvider, useToast } from './context/ToastContext';
 import { Layout } from './components/layout/Layout';
 import { DashboardPage } from './pages/DashboardPage';
@@ -123,7 +123,7 @@ function DashboardApp() {
     try {
       setDrawerTask((prev) => ({ ...prev, status: newStatus }));
       await tasksHook.patchTaskStatus(taskId, newStatus);
-    } catch (err) {
+    } catch {
       // Handled in hook
     }
   };

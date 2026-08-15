@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useUser } from '../../context/UserContext';
 import { useToast } from '../../context/ToastContext';
 import { formatRelativeTime } from '../../utils/formatters';
@@ -7,8 +7,7 @@ import { Send, MessageSquare, User } from 'lucide-react';
 
 export function CommentSection({
   comments = [],
-  onAddComment,
-  isLoading = false
+  onAddComment
 }) {
   const { currentUser } = useUser();
   const toast = useToast();

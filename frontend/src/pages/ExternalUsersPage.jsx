@@ -1,10 +1,9 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { externalService } from '../services/external.service';
 import { Skeleton } from '../components/common/Skeleton';
 import { Button } from '../components/common/Button';
 import { useToast } from '../context/ToastContext';
 import {
-  Globe2,
   RefreshCw,
   Search,
   Mail,
@@ -12,7 +11,6 @@ import {
   Building2,
   MapPin,
   ExternalLink,
-  ShieldCheck,
   AlertCircle,
   Users
 } from 'lucide-react';
@@ -24,7 +22,6 @@ export function ExternalUsersPage() {
   const [refreshing, setRefreshing] = useState(false);
   const [search, setSearch] = useState('');
   const [departmentFilter, setDepartmentFilter] = useState('');
-  const [sourceInfo, setSourceInfo] = useState(null);
   const [warning, setWarning] = useState(null);
 
   const fetchUsers = useCallback(async (isRefresh = false) => {
@@ -34,7 +31,6 @@ export function ExternalUsersPage() {
 
       const res = await externalService.getExternalUsers();
       setUsers(res.data || []);
-      setSourceInfo(res.source);
       setWarning(res.warning);
 
       if (isRefresh) {

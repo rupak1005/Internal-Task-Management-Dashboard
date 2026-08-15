@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import { usersService } from '../services/users.service';
 
 const UserContext = createContext(null);
@@ -9,13 +9,13 @@ export function UserProvider({ children }) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const fetchUsers = async () => {
+  const fetchUsers = useCallback(async () => {
     try {
       setLoading(true);
       const data = await usersService.getUsers();
       setUsers(data);
-      if (data.length > 0 && !currentUser) {
-        setCurrentUser(data[0]); // Default to first user (Sarah Chen - Admin)
+      if (data.length > 0) {
+        setCurrentUser((prev) => prev || data[0]); // Default to first user (Sarah Chen - Admin)
       }
       setError(null);
     } catch (err) {
@@ -24,11 +24,11 @@ export function UserProvider({ children }) {
     } finally {
       setLoading(false);
     }
-  };
+  }, []);
 
   useEffect(() => {
     fetchUsers();
-  }, []);
+  }, [fetchUsers]);
 
   const switchUser = (userId) => {
     const found = users.find((u) => u.id === Number(userId));

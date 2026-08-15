@@ -1,7 +1,6 @@
-import React from 'react';
-import { StatusBadge } from '../common/StatusBadge';
 import { PriorityBadge } from '../common/PriorityBadge';
-import { formatDate, getDueDateStatus } from '../../utils/formatters';
+import { StatusBadge } from '../common/StatusBadge';
+import { getDueDateStatus } from '../../utils/formatters';
 import { ArrowRight, AlertTriangle, Clock } from 'lucide-react';
 import { Button } from '../common/Button';
 

@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
 import { TaskFilters } from '../components/tasks/TaskFilters';
 import { TaskTable } from '../components/tasks/TaskTable';
 import { Pagination } from '../components/common/Pagination';
 import { EmptyState } from '../components/common/EmptyState';
 import { Skeleton } from '../components/common/Skeleton';
 import { Button } from '../components/common/Button';
-import { Plus, RefreshCw, Layers } from 'lucide-react';
+import { Plus, RefreshCw } from 'lucide-react';
 
 export function TasksPage({
   useTasksHook,

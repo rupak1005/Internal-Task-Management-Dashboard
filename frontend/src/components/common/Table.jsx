@@ -1,4 +1,3 @@
-import React from 'react';
 import { ArrowUpDown, ArrowUp, ArrowDown } from 'lucide-react';
 
 export function Table({

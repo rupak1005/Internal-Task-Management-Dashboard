@@ -1,4 +1,3 @@
-import React from 'react';
 import { ClipboardList, Plus } from 'lucide-react';
 import { Button } from './Button';
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { StatCard } from '../components/dashboard/StatCard';
 import { TaskDistribution } from '../components/dashboard/TaskDistribution';
 import { RecentActivity } from '../components/dashboard/RecentActivity';
@@ -7,7 +7,7 @@ import { Button } from '../components/common/Button';
 import { tasksService } from '../services/tasks.service';
 import { useUser } from '../context/UserContext';
 import { useToast } from '../context/ToastContext';
-import { Plus, RefreshCw, Layers, CheckCircle2, AlertTriangle, ArrowRight } from 'lucide-react';
+import { Plus, RefreshCw, CheckCircle2 } from 'lucide-react';
 
 export function DashboardPage({ onSelectTab, onSelectTask, onOpenCreateTask, onFilterByStatus }) {
   const { currentUser } = useUser();

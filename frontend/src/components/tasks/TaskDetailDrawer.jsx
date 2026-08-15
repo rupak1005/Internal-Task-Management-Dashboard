@@ -1,9 +1,7 @@
-import React from 'react';
 import { Modal } from '../common/Modal';
-import { StatusBadge } from '../common/StatusBadge';
 import { PriorityBadge } from '../common/PriorityBadge';
 import { CommentSection } from './CommentSection';
-import { formatDate, formatDateTime, getDueDateStatus } from '../../utils/formatters';
+import { formatDateTime, getDueDateStatus } from '../../utils/formatters';
 import { STATUS_OPTIONS } from '../../utils/constants';
 import { Button } from '../common/Button';
 import {
@@ -11,9 +9,7 @@ import {
   Clock,
   User,
   Edit2,
-  Trash2,
-  CheckCircle2,
-  AlertTriangle
+  Trash2
 } from 'lucide-react';
 
 export function TaskDetailDrawer({

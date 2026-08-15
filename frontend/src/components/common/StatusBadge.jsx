@@ -1,4 +1,3 @@
-import React from 'react';
 import { STATUS_CONFIG } from '../../utils/constants';
 import { Clock, PlayCircle, CheckCircle2, AlertOctagon } from 'lucide-react';
 

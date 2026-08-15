@@ -1,11 +1,8 @@
-import React from 'react';
 import {
   LayoutDashboard,
   CheckSquare,
   Globe2,
-  Users,
-  Layers,
-  Sparkles
+  Layers
 } from 'lucide-react';
 
 export function Sidebar({ currentTab, onSelectTab, counts = {}, isMobileOpen, onCloseMobile }) {

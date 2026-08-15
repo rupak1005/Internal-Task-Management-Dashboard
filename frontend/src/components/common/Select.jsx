@@ -1,4 +1,4 @@
-import React, { forwardRef } from 'react';
+import { forwardRef } from 'react';
 import { AlertCircle } from 'lucide-react';
 
 export const Select = forwardRef(function Select(

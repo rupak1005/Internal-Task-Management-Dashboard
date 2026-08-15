@@ -1,16 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { Search, Filter, X, RefreshCw } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { Search, Filter, X } from 'lucide-react';
 import { STATUS_OPTIONS, PRIORITY_OPTIONS } from '../../utils/constants';
 import { useUser } from '../../context/UserContext';
 import { useDebounce } from '../../hooks/useDebounce';
-import { Button } from '../common/Button';
 
 export function TaskFilters({
   filters,
   onFilterChange,
-  onReset,
-  totalResults = 0,
-  isLoading = false
+  onReset
 }) {
   const { users } = useUser();
   const [searchTerm, setSearchTerm] = useState(filters.search || '');
@@ -21,7 +18,7 @@ export function TaskFilters({
     if (debouncedSearch !== filters.search) {
       onFilterChange({ search: debouncedSearch, page: 1 });
     }
-  }, [debouncedSearch]);
+  }, [debouncedSearch, filters.search, onFilterChange]);
 
   // Keep local search input in sync if parent resets
   useEffect(() => {

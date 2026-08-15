@@ -1,9 +1,9 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { Menu, Plus, Bell, ChevronDown, Check, UserCheck, Search } from 'lucide-react';
+import { useState, useRef, useEffect } from 'react';
+import { Menu, Plus, ChevronDown, Check } from 'lucide-react';
 import { Button } from '../common/Button';
 import { useUser } from '../../context/UserContext';
 
-export function Header({ onOpenMobileMenu, onOpenCreateTask, onGlobalSearch }) {
+export function Header({ onOpenMobileMenu, onOpenCreateTask }) {
   const { users, currentUser, switchUser } = useUser();
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const userMenuRef = useRef(null);

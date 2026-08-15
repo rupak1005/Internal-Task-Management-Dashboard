@@ -1,5 +1,3 @@
-import React from 'react';
-
 export function Skeleton({ className = '', variant = 'text' }) {
   const baseClasses = 'bg-slate-200 animate-shimmer rounded';
 

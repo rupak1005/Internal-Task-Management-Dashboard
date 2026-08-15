@@ -1,5 +1,4 @@
 const { query } = require('../database/database');
-const userRepository = require('../repositories/user.repository');
 
 class DashboardService {
   async getMetrics(userId = null) {

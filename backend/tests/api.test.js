@@ -28,7 +28,7 @@ async function request(method, path, body = null) {
         let json = null;
         try {
           json = JSON.parse(data);
-        } catch (e) {
+        } catch {
           json = data;
         }
         resolve({

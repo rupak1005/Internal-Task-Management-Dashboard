@@ -1,4 +1,3 @@
-import React from 'react';
 import { STATUS_CONFIG, PRIORITY_CONFIG } from '../../utils/constants';
 
 export function TaskDistribution({ statusDistribution = [], priorityDistribution = [], total = 0 }) {

@@ -1,22 +1,19 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { tasksService } from '../services/tasks.service';
 import { StatusBadge } from '../components/common/StatusBadge';
 import { PriorityBadge } from '../components/common/PriorityBadge';
 import { CommentSection } from '../components/tasks/CommentSection';
 import { Skeleton } from '../components/common/Skeleton';
 import { Button } from '../components/common/Button';
-import { formatDate, formatDateTime, getDueDateStatus } from '../utils/formatters';
+import { formatDateTime, getDueDateStatus } from '../utils/formatters';
 import { STATUS_OPTIONS } from '../utils/constants';
 import { useToast } from '../context/ToastContext';
 import {
   ArrowLeft,
-  Calendar,
   Clock,
   User,
   Edit2,
-  Trash2,
-  CheckCircle2,
-  AlertTriangle
+  Trash2
 } from 'lucide-react';
 
 export function TaskDetailPage({

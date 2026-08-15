@@ -8,6 +8,8 @@
     "dev": "node --watch server.js",
     "seed": "node utils/seeder.js",
     "test": "node tests/api.test.js",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
     "db:start": "pg_ctl -D ./data/pgdata -o '-p 5432 -k ./data/pgdata' -l ./data/pgdata/postgres.log start",
     "db:stop": "pg_ctl -D ./data/pgdata stop",
     "db:status": "pg_isready -h localhost -p 5432"
@@ -19,5 +21,10 @@
     "express": "^4.21.2",
     "joi": "^17.13.3",
     "pg": "^8.13.1"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.5",
+    "eslint": "^9.39.5",
+    "globals": "^17.11.0"
   }
 }

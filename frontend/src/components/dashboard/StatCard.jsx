@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   CheckSquare,
   Clock,
@@ -6,7 +5,6 @@ import {
   CheckCircle2,
   AlertTriangle,
   UserCheck,
-  TrendingUp,
   ArrowRight
 } from 'lucide-react';
 
