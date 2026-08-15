@@ -46,36 +46,36 @@ export function Sidebar({ currentTab, onSelectTab, counts = {}, isMobileOpen, on
       {/* Mobile backdrop */}
       {isMobileOpen && (
         <div
-          className="fixed inset-0 z-40 bg-slate-900/60 backdrop-blur-sm lg:hidden transition-opacity"
+          className="fixed inset-0 z-40 bg-slate-900/60 dark:bg-slate-950/80 backdrop-blur-sm lg:hidden transition-opacity"
           onClick={onCloseMobile}
         />
       )}
 
       {/* Sidebar container */}
       <aside
-        className={`fixed top-0 bottom-0 left-0 z-40 w-64 bg-slate-900 text-slate-300 flex flex-col transition-transform duration-300 ease-in-out lg:translate-x-0 ${
+        className={`fixed top-0 bottom-0 left-0 z-40 w-64 bg-white dark:bg-slate-900 border-r border-slate-200 dark:border-slate-800 text-slate-700 dark:text-slate-300 flex flex-col transition-all duration-300 ease-in-out lg:translate-x-0 ${
           isMobileOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
         {/* Brand Header */}
-        <div className="h-16 flex items-center gap-3 px-6 border-b border-slate-800 bg-slate-950/40">
+        <div className="h-16 flex items-center gap-3 px-6 border-b border-slate-200 dark:border-slate-800 bg-slate-50/50 dark:bg-slate-950/40">
           <div className="w-9 h-9 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-500 flex items-center justify-center text-white shadow-md shadow-blue-500/20">
             <Layers className="w-5 h-5" />
           </div>
           <div>
-            <div className="font-bold text-white tracking-tight flex items-center gap-1.5">
+            <div className="font-bold text-slate-900 dark:text-white tracking-tight flex items-center gap-1.5">
               <span>TaskPilot</span>
-              <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-blue-500/20 text-blue-400 font-semibold border border-blue-500/30">
+              <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-blue-50 dark:bg-blue-500/20 text-blue-600 dark:text-blue-400 font-semibold border border-blue-200 dark:border-blue-500/30">
                 PRO
               </span>
             </div>
-            <div className="text-[11px] text-slate-400">Internal Dashboard</div>
+            <div className="text-[11px] text-slate-500 dark:text-slate-400">Internal Dashboard</div>
           </div>
         </div>
 
         {/* Navigation Menu */}
         <div className="flex-1 py-6 px-3 space-y-1 overflow-y-auto">
-          <div className="px-3 pb-2 text-[11px] font-semibold uppercase tracking-wider text-slate-400">
+          <div className="px-3 pb-2 text-[11px] font-semibold uppercase tracking-wider text-slate-400 dark:text-slate-500">
             Navigation
           </div>
 
@@ -93,13 +93,13 @@ export function Sidebar({ currentTab, onSelectTab, counts = {}, isMobileOpen, on
                 className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all duration-150 group cursor-pointer ${
                   isActive
                     ? 'bg-blue-600 text-white shadow-md shadow-blue-600/30 font-semibold'
-                    : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/60'
+                    : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800/60'
                 }`}
               >
                 <div className="flex items-center gap-3">
                   <Icon
                     className={`w-4 h-4 transition-colors ${
-                      isActive ? 'text-white' : 'text-slate-400 group-hover:text-slate-200'
+                      isActive ? 'text-white' : 'text-slate-400 group-hover:text-slate-700 dark:group-hover:text-slate-200'
                     }`}
                   />
                   <span>{item.label}</span>
@@ -111,10 +111,10 @@ export function Sidebar({ currentTab, onSelectTab, counts = {}, isMobileOpen, on
                       isActive
                         ? 'bg-white/20 text-white'
                         : item.badge === 'Admin'
-                        ? 'bg-purple-500/20 text-purple-300 border border-purple-500/30'
+                        ? 'bg-purple-100 dark:bg-purple-500/20 text-purple-700 dark:text-purple-300 border border-purple-200 dark:border-purple-500/30'
                         : item.badge === 'Live'
-                        ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30'
-                        : 'bg-slate-800 text-slate-400 group-hover:bg-slate-700'
+                        ? 'bg-emerald-100 dark:bg-emerald-500/20 text-emerald-700 dark:text-emerald-400 border border-emerald-200 dark:border-emerald-500/30'
+                        : 'bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 group-hover:bg-slate-200 dark:group-hover:bg-slate-700'
                     }`}
                   >
                     {item.badge}
@@ -126,12 +126,12 @@ export function Sidebar({ currentTab, onSelectTab, counts = {}, isMobileOpen, on
         </div>
 
         {/* Quick System Status Footer */}
-        <div className="p-4 m-3 rounded-xl bg-slate-800/50 border border-slate-700/60">
-          <div className="flex items-center gap-2 text-xs font-medium text-slate-300 mb-1">
+        <div className="p-4 m-3 rounded-xl bg-slate-50 dark:bg-slate-800/50 border border-slate-200/80 dark:border-slate-700/60">
+          <div className="flex items-center gap-2 text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">
             <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
             <span>PostgreSQL & API Connected</span>
           </div>
-          <p className="text-[11px] text-slate-400 leading-relaxed">
+          <p className="text-[11px] text-slate-500 dark:text-slate-400 leading-relaxed">
             REST service healthy on port 8000
           </p>
         </div>

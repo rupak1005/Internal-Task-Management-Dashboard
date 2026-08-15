@@ -20,7 +20,7 @@ export function StatusBadge({ status = 'pending', className = '', showIcon = tru
 
   return (
     <span
-      className={`inline-flex items-center rounded-full border shadow-sm ring-1 ring-inset ${config.badgeClass} ${sizeClasses[size] || sizeClasses.sm} ${className}`}
+      className={`inline-flex items-center rounded-full border shadow-xs ring-1 ring-inset transition-colors ${config.badgeClass} ${sizeClasses[size] || sizeClasses.sm} ${className}`}
     >
       {showIcon ? (
         <Icon className={size === 'xs' ? 'w-3 h-3 shrink-0' : 'w-3.5 h-3.5 shrink-0'} />

@@ -31,11 +31,17 @@ export function ConfirmModal({
       }
     >
       <div className="flex items-start gap-4">
-        <div className={`p-3 rounded-full shrink-0 ${variant === 'danger' ? 'bg-rose-100 text-rose-600' : 'bg-amber-100 text-amber-600'}`}>
+        <div
+          className={`p-3 rounded-full shrink-0 transition-colors ${
+            variant === 'danger'
+              ? 'bg-rose-100 text-rose-600 dark:bg-rose-950/60 dark:text-rose-400'
+              : 'bg-amber-100 text-amber-600 dark:bg-amber-950/60 dark:text-amber-400'
+          }`}
+        >
           <AlertTriangle className="w-6 h-6" />
         </div>
         <div>
-          <p className="text-sm text-slate-600 leading-relaxed">{message}</p>
+          <p className="text-sm text-slate-600 dark:text-slate-300 leading-relaxed">{message}</p>
         </div>
       </div>
     </Modal>

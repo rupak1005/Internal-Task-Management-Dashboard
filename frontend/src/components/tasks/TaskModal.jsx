@@ -140,7 +140,7 @@ export function TaskModal({
             onChange={(e) => handleChange('status', e.target.value)}
           >
             {STATUS_OPTIONS.filter((o) => o.value).map((opt) => (
-              <option key={opt.value} value={opt.value}>
+              <option key={opt.value} value={opt.value} className="bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100">
                 {opt.label}
               </option>
             ))}
@@ -152,7 +152,7 @@ export function TaskModal({
             onChange={(e) => handleChange('priority', e.target.value)}
           >
             {PRIORITY_OPTIONS.filter((o) => o.value).map((opt) => (
-              <option key={opt.value} value={opt.value}>
+              <option key={opt.value} value={opt.value} className="bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100">
                 {opt.label}
               </option>
             ))}
@@ -166,9 +166,11 @@ export function TaskModal({
             value={formData.assigned_to}
             onChange={(e) => handleChange('assigned_to', e.target.value)}
           >
-            <option value="">Unassigned</option>
+            <option value="" className="bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100">
+              Unassigned
+            </option>
             {users.map((u) => (
-              <option key={u.id} value={u.id}>
+              <option key={u.id} value={u.id} className="bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100">
                 {u.name} ({u.role})
               </option>
             ))}

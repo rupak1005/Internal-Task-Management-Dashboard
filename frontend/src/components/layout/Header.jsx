@@ -19,7 +19,7 @@ export function Header({ onOpenMobileMenu, onOpenCreateTask, onOpenAuthModal, on
   }, []);
 
   return (
-    <header className="sticky top-0 z-30 h-16 glass-header dark:bg-slate-900/80 dark:border-slate-800 px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-4">
+    <header className="sticky top-0 z-30 h-16 bg-white/80 dark:bg-slate-900/90 backdrop-blur-md border-b border-slate-200/80 dark:border-slate-800 px-4 sm:px-6 lg:px-8 flex items-center justify-between gap-4 transition-colors duration-200">
       {/* Left side: Mobile menu toggle + breadcrumb / context */}
       <div className="flex items-center gap-3">
         <button
@@ -35,8 +35,8 @@ export function Header({ onOpenMobileMenu, onOpenCreateTask, onOpenAuthModal, on
             <span>Workspace Operations</span>
           </div>
           <span className="hidden sm:inline text-slate-300 dark:text-slate-700">/</span>
-          <span className="hidden sm:inline-flex items-center gap-1.5 text-xs px-2.5 py-1 rounded-full bg-slate-100/90 dark:bg-slate-800 text-slate-700 dark:text-slate-300 font-medium border border-slate-200/60 dark:border-slate-700">
-            <Activity className="w-3 h-3 text-emerald-500 animate-pulse" />
+          <span className="hidden sm:inline-flex items-center gap-1.5 text-xs px-2.5 py-1 rounded-full bg-slate-100/90 dark:bg-slate-800/80 text-slate-700 dark:text-slate-300 font-medium border border-slate-200/60 dark:border-slate-700/80">
+            <Activity className="w-3 h-3 text-emerald-500 dark:text-emerald-400 animate-pulse" />
             <span>PostgreSQL Active</span>
           </span>
         </div>
@@ -49,7 +49,7 @@ export function Header({ onOpenMobileMenu, onOpenCreateTask, onOpenAuthModal, on
           href="/api/docs"
           target="_blank"
           rel="noreferrer"
-          className="hidden md:flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1.5 rounded-xl border border-slate-200/90 dark:border-slate-700 bg-white/90 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 hover:border-slate-300 shadow-2xs transition-colors"
+          className="hidden md:flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1.5 rounded-xl border border-slate-200/90 dark:border-slate-700/80 bg-white/90 dark:bg-slate-800/80 text-slate-700 dark:text-slate-300 hover:text-blue-600 dark:hover:text-blue-400 hover:border-slate-300 dark:hover:border-slate-600 shadow-2xs transition-colors"
           title="Open interactive Swagger OpenAPI Documentation"
         >
           <BookOpen className="w-3.5 h-3.5" />
@@ -59,11 +59,11 @@ export function Header({ onOpenMobileMenu, onOpenCreateTask, onOpenAuthModal, on
         {/* Dark Mode Toggle */}
         <button
           onClick={toggleDarkMode}
-          className="p-2 rounded-xl border border-slate-200/90 dark:border-slate-700 bg-white/90 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-700/60 transition-all shadow-2xs cursor-pointer"
+          className="p-2 rounded-xl border border-slate-200/90 dark:border-slate-700/80 bg-white/90 dark:bg-slate-800/80 text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-50 dark:hover:bg-slate-700/60 transition-all shadow-2xs cursor-pointer"
           title={isDarkMode ? 'Switch to Light Mode' : 'Switch to Dark Mode'}
           aria-label="Toggle theme"
         >
-          {isDarkMode ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4" />}
+          {isDarkMode ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-slate-600" />}
         </button>
 
         {/* Create Task Button */}
@@ -81,14 +81,14 @@ export function Header({ onOpenMobileMenu, onOpenCreateTask, onOpenAuthModal, on
         <div className="relative" ref={userMenuRef}>
           <button
             onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}
-            className="flex items-center gap-2.5 p-1.5 pl-2 pr-3 rounded-xl border border-slate-200/90 dark:border-slate-700 bg-white/90 dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700/60 hover:border-slate-300 transition-all text-left group shadow-2xs cursor-pointer"
+            className="flex items-center gap-2.5 p-1.5 pl-2 pr-3 rounded-xl border border-slate-200/90 dark:border-slate-700/80 bg-white/90 dark:bg-slate-800/80 hover:bg-slate-50 dark:hover:bg-slate-700/60 hover:border-slate-300 dark:hover:border-slate-600 transition-all text-left group shadow-2xs cursor-pointer"
           >
             <div className="relative">
               {user?.avatar_url ? (
                 <img
                   src={user.avatar_url}
                   alt={user.name}
-                  className="w-7 h-7 rounded-full object-cover ring-2 ring-blue-500/20"
+                  className="w-7 h-7 rounded-full object-cover ring-2 ring-blue-500/20 dark:ring-blue-400/30"
                 />
               ) : (
                 <div className="w-7 h-7 rounded-full bg-blue-100 dark:bg-blue-900/60 text-blue-700 dark:text-blue-300 flex items-center justify-center font-bold text-xs">
@@ -103,20 +103,20 @@ export function Header({ onOpenMobileMenu, onOpenCreateTask, onOpenAuthModal, on
                 <span>{user?.name || 'Guest'}</span>
                 <span className={`text-[10px] px-1.5 py-0.2 font-semibold rounded ${
                   isAdmin
-                    ? 'bg-purple-100 text-purple-700 dark:bg-purple-950 dark:text-purple-300 border border-purple-200 dark:border-purple-800'
-                    : 'bg-slate-100 text-slate-600 dark:bg-slate-700 dark:text-slate-300'
+                    ? 'bg-purple-100 text-purple-700 dark:bg-purple-950/80 dark:text-purple-300 border border-purple-200 dark:border-purple-800'
+                    : 'bg-slate-100 text-slate-600 dark:bg-slate-700/80 dark:text-slate-300 border border-slate-200/50 dark:border-slate-600/50'
                 }`}>
                   {user?.role || 'Member'}
                 </span>
               </div>
-              <div className="text-[10px] text-slate-400 font-normal">Active User (Me)</div>
+              <div className="text-[10px] text-slate-400 dark:text-slate-400 font-normal">Active User (Me)</div>
             </div>
             <ChevronDown className="w-3.5 h-3.5 text-slate-400 group-hover:text-slate-600 dark:group-hover:text-slate-200 transition-transform duration-200" />
           </button>
 
           {/* User Switcher Menu */}
           {isUserMenuOpen && (
-            <div className="absolute right-0 mt-2 w-72 rounded-2xl bg-white dark:bg-slate-800 shadow-xl border border-slate-200/90 dark:border-slate-700 py-2 z-50 animate-slide-up">
+            <div className="absolute right-0 mt-2 w-72 rounded-2xl bg-white dark:bg-slate-800 shadow-xl border border-slate-200/90 dark:border-slate-700/90 py-2 z-50 animate-slide-up">
               <div className="px-4 py-2.5 border-b border-slate-100 dark:border-slate-700/60 bg-slate-50/50 dark:bg-slate-800/50">
                 <p className="text-xs font-semibold text-slate-900 dark:text-slate-100">Switch Active Account / RBAC</p>
                 <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5 leading-relaxed">
@@ -156,7 +156,7 @@ export function Header({ onOpenMobileMenu, onOpenCreateTask, onOpenAuthModal, on
                               </span>
                             )}
                           </div>
-                          <div className="text-[10px] text-slate-400">{u.email}</div>
+                          <div className="text-[10px] text-slate-400 dark:text-slate-400">{u.email}</div>
                         </div>
                       </div>
                       {isSelected && <Check className="w-4 h-4 text-blue-600 dark:text-blue-400 shrink-0" />}
@@ -186,7 +186,7 @@ export function Header({ onOpenMobileMenu, onOpenCreateTask, onOpenAuthModal, on
                       if (onOpenAuthModal) onOpenAuthModal();
                       setIsUserMenuOpen(false);
                     }}
-                    className="flex-1 flex items-center justify-center gap-1.5 py-1.5 text-xs font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700 rounded-lg transition-colors cursor-pointer"
+                    className="flex-1 flex items-center justify-center gap-1.5 py-1.5 text-xs font-medium text-slate-700 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-700/60 rounded-lg transition-colors cursor-pointer"
                   >
                     <LogIn className="w-3.5 h-3.5" />
                     <span>Login / Register</span>
@@ -197,7 +197,7 @@ export function Header({ onOpenMobileMenu, onOpenCreateTask, onOpenAuthModal, on
                       logout();
                       setIsUserMenuOpen(false);
                     }}
-                    className="p-1.5 text-slate-400 hover:text-rose-600 hover:bg-rose-50 dark:hover:bg-rose-950/40 rounded-lg transition-colors cursor-pointer"
+                    className="p-1.5 text-slate-400 hover:text-rose-600 dark:hover:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/40 rounded-lg transition-colors cursor-pointer"
                     title="Log out"
                   >
                     <LogOut className="w-3.5 h-3.5" />

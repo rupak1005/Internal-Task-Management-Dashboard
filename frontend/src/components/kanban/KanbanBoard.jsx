@@ -92,7 +92,7 @@ export function KanbanBoard({
 
   return (
     <DragDropContext onDragEnd={handleDragEnd}>
-      <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 items-start ${className}`}>
+      <div className={`grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 items-start text-slate-900 dark:text-slate-100 transition-colors duration-200 ${className}`}>
         {COLUMNS.map((col) => (
           <KanbanColumn
             key={col.id}

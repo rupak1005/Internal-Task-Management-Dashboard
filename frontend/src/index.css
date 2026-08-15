@@ -4,17 +4,17 @@
 
 @layer base {
   body {
-    @apply bg-slate-50 text-slate-900 antialiased;
+    @apply bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 antialiased transition-colors duration-200;
     font-feature-settings: "cv02", "cv03", "cv04", "cv11", "tnum";
   }
 
-  /* Accessible focus ring styling */
+  /* Accessible focus ring styling for light and dark modes */
   *:focus-visible {
-    @apply outline-none ring-2 ring-blue-500/40 ring-offset-1 ring-offset-white;
+    @apply outline-none ring-2 ring-blue-500/40 dark:ring-blue-400/40 ring-offset-1 ring-offset-white dark:ring-offset-slate-950;
   }
 }
 
-/* Custom modern scrollbars */
+/* Custom modern scrollbars for light and dark themes */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -28,6 +28,13 @@
 }
 ::-webkit-scrollbar-thumb:hover {
   background: #94a3b8;
+}
+
+.dark ::-webkit-scrollbar-thumb {
+  background: #334155;
+}
+.dark ::-webkit-scrollbar-thumb:hover {
+  background: #475569;
 }
 
 /* Shimmer animation for Skeletons */
@@ -56,11 +63,25 @@
   content: '';
 }
 
-/* Glassmorphism utility */
+.dark .animate-shimmer::after {
+  background-image: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0,
+    rgba(255, 255, 255, 0.05) 20%,
+    rgba(255, 255, 255, 0.1) 60%,
+    rgba(255, 255, 255, 0)
+  );
+}
+
+/* Glassmorphism utilities with dark mode support */
 .glass-panel {
   background: rgba(255, 255, 255, 0.82);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
+}
+
+.dark .glass-panel {
+  background: rgba(15, 23, 42, 0.82);
 }
 
 .glass-header {
@@ -68,6 +89,11 @@
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid rgba(226, 232, 240, 0.8);
+}
+
+.dark .glass-header {
+  background: rgba(15, 23, 42, 0.85);
+  border-bottom: 1px solid rgba(51, 65, 85, 0.6);
 }
 
 /* Subtle active button press physics */

@@ -63,10 +63,10 @@ export function DashboardPage({ onSelectTab, onSelectTask, onOpenCreateTask, onF
       {/* Page Header */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold tracking-tight text-slate-900">
+          <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-slate-100">
             Operations & Task Overview
           </h1>
-          <p className="text-sm text-slate-500 mt-1">
+          <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
             Real-time pipeline metrics, team workload, and workflow tracking.
           </p>
         </div>
@@ -93,23 +93,23 @@ export function DashboardPage({ onSelectTab, onSelectTask, onOpenCreateTask, onF
         </div>
       </div>
 
-      {/* Completion Rate Executive Banner */}
-      <div className="p-6 sm:p-7 rounded-3xl bg-slate-900 text-white shadow-xl shadow-slate-900/10 border border-slate-800 flex flex-col md:flex-row md:items-center justify-between gap-6 relative overflow-hidden">
-        {/* Subtle background gradient orbs */}
-        <div className="absolute top-0 right-0 -mt-8 -mr-8 w-64 h-64 rounded-full bg-blue-600/15 blur-3xl pointer-events-none" />
-        <div className="absolute bottom-0 left-1/3 -mb-8 w-48 h-48 rounded-full bg-emerald-600/10 blur-2xl pointer-events-none" />
+      {/* Completion Rate Executive Banner (Light & Dark Theme Aware) */}
+      <div className="p-6 sm:p-7 rounded-3xl bg-slate-900 dark:bg-slate-900/90 text-white dark:text-white shadow-xl shadow-slate-900/10 dark:shadow-slate-950/20 border border-slate-800 dark:border-slate-800 flex flex-col md:flex-row md:items-center justify-between gap-6 relative overflow-hidden transition-colors duration-200">
+        {/* Background gradient orbs */}
+        <div className="absolute top-0 right-0 -mt-8 -mr-8 w-64 h-64 rounded-full bg-blue-600/20 dark:bg-blue-500/10 blur-3xl pointer-events-none" />
+        <div className="absolute bottom-0 left-1/3 -mb-8 w-48 h-48 rounded-full bg-emerald-600/15 dark:bg-emerald-500/10 blur-2xl pointer-events-none" />
 
         <div className="space-y-2 z-10">
-          <div className="inline-flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1 rounded-full bg-white/10 text-slate-200 border border-white/10 backdrop-blur-md">
+          <div className="inline-flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1 rounded-full bg-white/10 dark:bg-slate-800/80 text-slate-200 dark:text-slate-300 border border-white/10 dark:border-slate-700 backdrop-blur-md">
             <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400" />
             <span>Workflow Completion Rate</span>
           </div>
 
-          <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-white">
+          <h2 className="text-2xl sm:text-3xl font-bold tracking-tight text-white dark:text-white">
             {metrics.completion_rate || 0}% of deliverables completed
           </h2>
 
-          <p className="text-xs sm:text-sm text-slate-400 max-w-xl leading-relaxed">
+          <p className="text-xs sm:text-sm text-slate-300 dark:text-slate-400 max-w-xl leading-relaxed">
             {metrics.completed || 0} tasks resolved out of {metrics.total || 0} total assignments.
             {metrics.overdue > 0 ? (
               <span className="text-rose-400 font-medium ml-1">
@@ -124,15 +124,15 @@ export function DashboardPage({ onSelectTab, onSelectTask, onOpenCreateTask, onF
         </div>
 
         <div className="flex items-center gap-3 z-10 shrink-0">
-          <Button
-            variant="secondary"
-            size="md"
-            rightIcon={ArrowRight}
-            onClick={() => onSelectTab('tasks')}
-            className="bg-white text-slate-900 hover:bg-slate-100 border-transparent font-semibold shadow-md"
-          >
-            Manage Backlog
-          </Button>
+         <Button
+  variant="secondary"
+  size="md"
+  rightIcon={ArrowRight}
+  onClick={() => onSelectTab('tasks')}
+  className="dark:bg-slate-900 bg-white text-slate-600 hover:bg-slate-800 dark:bg-white dark:text-slate-900 dark:hover:bg-slate-100 border-transparent font-semibold shadow-md cursor-pointer transition-colors"
+>
+  Manage Backlog
+</Button>
         </div>
       </div>
 

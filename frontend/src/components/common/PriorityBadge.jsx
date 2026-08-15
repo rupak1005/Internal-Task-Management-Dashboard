@@ -20,7 +20,7 @@ export function PriorityBadge({ priority = 'medium', className = '', showIcon = 
 
   return (
     <span
-      className={`inline-flex items-center rounded-md border ${config.badgeClass} ${sizeClasses[size] || sizeClasses.sm} ${className}`}
+      className={`inline-flex items-center rounded-md border transition-colors ${config.badgeClass} ${sizeClasses[size] || sizeClasses.sm} ${className}`}
     >
       {showIcon && <Icon className={`${config.iconColor} ${size === 'xs' ? 'w-3 h-3' : 'w-3.5 h-3.5'} shrink-0`} />}
       <span>{config.label}</span>

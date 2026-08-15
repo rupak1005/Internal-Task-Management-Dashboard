@@ -40,7 +40,7 @@ export function TasksPage({
             <h1 className="text-2xl font-bold tracking-tight text-slate-900 dark:text-slate-100">
               Task Management
             </h1>
-            <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-blue-50 dark:bg-blue-950/40 text-blue-700 dark:text-blue-400 border border-blue-200 dark:border-blue-800">
+            <span className="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-blue-50 dark:bg-blue-950/40 text-blue-700 dark:text-blue-400 border border-blue-200 dark:border-blue-800/80">
               {pagination.total} Tasks
             </span>
           </div>
@@ -109,7 +109,7 @@ export function TasksPage({
 
       {/* View Content (Table or Kanban) */}
       {loading && tasks.length === 0 ? (
-        <div className="rounded-2xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-4 space-y-3">
+        <div className="rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800 p-4 space-y-3 transition-colors">
           <table className="min-w-full">
             <tbody>
               {[...Array(6)].map((_, i) => (

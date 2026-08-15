@@ -79,8 +79,8 @@ export function TaskDetailPage({
   if (!task) {
     return (
       <div className="text-center py-16">
-        <h3 className="text-lg font-semibold text-slate-800">Task Not Found</h3>
-        <p className="text-sm text-slate-500 mt-1">This task may have been removed.</p>
+        <h3 className="text-lg font-semibold text-slate-800 dark:text-slate-200">Task Not Found</h3>
+        <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">This task may have been removed.</p>
         <Button variant="secondary" icon={ArrowLeft} onClick={onBack} className="mt-4">
           Back to Tasks
         </Button>
@@ -91,7 +91,7 @@ export function TaskDetailPage({
   const dueInfo = getDueDateStatus(task.due_date, task.status);
 
   return (
-    <div className="max-w-4xl mx-auto space-y-6 animate-fade-in">
+    <div className="max-w-4xl mx-auto space-y-6 animate-fade-in pb-8">
       {/* Top Back Navigation Bar */}
       <div className="flex items-center justify-between">
         <Button variant="ghost" size="sm" icon={ArrowLeft} onClick={onBack}>
@@ -113,7 +113,7 @@ export function TaskDetailPage({
             size="sm"
             icon={Trash2}
             onClick={() => onDelete(task)}
-            className="text-rose-600 hover:text-rose-700 hover:bg-rose-50"
+            className="text-rose-600 dark:text-rose-400 hover:text-rose-700 dark:hover:text-rose-300 hover:bg-rose-50 dark:hover:bg-rose-950/40"
           >
             Delete
           </Button>
@@ -121,27 +121,27 @@ export function TaskDetailPage({
       </div>
 
       {/* Main Task Header Card */}
-      <div className="bg-white p-6 sm:p-8 rounded-2xl border border-slate-200 shadow-sm space-y-6">
+      <div className="bg-white dark:bg-slate-800 p-6 sm:p-8 rounded-2xl border border-slate-200/90 dark:border-slate-700 shadow-xs space-y-6 transition-colors">
         <div className="flex flex-wrap items-center gap-3">
-          <span className="text-xs font-mono font-bold px-2.5 py-1 rounded-md bg-slate-100 text-slate-600">
+          <span className="text-xs font-mono font-bold px-2.5 py-1 rounded-md bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300 border border-slate-200/60 dark:border-slate-600/60">
             TASK #{task.id}
           </span>
           <StatusBadge status={task.status} size="md" />
           <PriorityBadge priority={task.priority} size="md" />
         </div>
 
-        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900 leading-snug">
+        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight text-slate-900 dark:text-slate-100 leading-snug">
           {task.title}
         </h1>
 
         {/* Status Switcher & Date Ribbon */}
-        <div className="flex flex-wrap items-center justify-between gap-4 p-4 rounded-xl bg-slate-50 border border-slate-200/80">
+        <div className="flex flex-wrap items-center justify-between gap-4 p-4 rounded-xl bg-slate-50 dark:bg-slate-900/50 border border-slate-200/80 dark:border-slate-700/60 transition-colors">
           <div className="flex items-center gap-3">
-            <span className="text-xs font-semibold text-slate-500 uppercase">Change Status:</span>
+            <span className="text-xs font-semibold text-slate-500 dark:text-slate-400 uppercase">Change Status:</span>
             <select
               value={task.status}
               onChange={(e) => handleStatusChange(e.target.value)}
-              className="text-xs font-semibold rounded-lg border border-slate-300 bg-white px-3 py-1.5 text-slate-800 shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500/20"
+              className="text-xs font-semibold rounded-lg border border-slate-300 dark:border-slate-600 bg-white dark:bg-slate-800 px-3 py-1.5 text-slate-800 dark:text-slate-200 shadow-xs focus:outline-hidden focus:ring-2 focus:ring-blue-500/20 dark:focus:ring-blue-400/20 cursor-pointer"
             >
               {STATUS_OPTIONS.filter((o) => o.value).map((opt) => (
                 <option key={opt.value} value={opt.value}>
@@ -152,12 +152,12 @@ export function TaskDetailPage({
           </div>
 
           <div className="flex items-center gap-2 text-xs">
-            <span className="text-slate-500">Deadline:</span>
+            <span className="text-slate-500 dark:text-slate-400">Deadline:</span>
             <span
               className={`font-semibold ${
                 dueInfo.variant === 'overdue'
-                  ? 'text-rose-600 bg-rose-100 px-2 py-0.5 rounded'
-                  : 'text-slate-800'
+                  ? 'text-rose-600 dark:text-rose-400 bg-rose-100 dark:bg-rose-950/60 px-2 py-0.5 rounded'
+                  : 'text-slate-800 dark:text-slate-200'
               }`}
             >
               {dueInfo.text}
@@ -167,45 +167,45 @@ export function TaskDetailPage({
 
         {/* Task Description */}
         <div className="space-y-2">
-          <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400">
+          <h3 className="text-xs font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">
             Description & Acceptance Criteria
           </h3>
-          <div className="p-4 rounded-xl bg-slate-50/50 border border-slate-200/60 text-sm text-slate-800 leading-relaxed whitespace-pre-wrap">
+          <div className="p-4 rounded-xl bg-slate-50/50 dark:bg-slate-900/40 border border-slate-200/60 dark:border-slate-700/60 text-sm text-slate-800 dark:text-slate-200 leading-relaxed whitespace-pre-wrap transition-colors">
             {task.description || (
-              <span className="text-slate-400 italic">No description provided.</span>
+              <span className="text-slate-400 dark:text-slate-500 italic">No description provided.</span>
             )}
           </div>
         </div>
 
         {/* Metadata Details Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4 border-t border-slate-100 text-xs">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4 border-t border-slate-100 dark:border-slate-700/60 text-xs">
           <div className="flex items-center gap-3">
             {task.assignee_avatar ? (
               <img
                 src={task.assignee_avatar}
                 alt={task.assignee_name || 'Assignee'}
-                className="w-9 h-9 rounded-full object-cover ring-1 ring-slate-200"
+                className="w-9 h-9 rounded-full object-cover ring-1 ring-slate-200 dark:ring-slate-700"
               />
             ) : (
-              <div className="w-9 h-9 rounded-full bg-blue-100 text-blue-700 flex items-center justify-center font-bold">
+              <div className="w-9 h-9 rounded-full bg-blue-100 dark:bg-blue-950/60 text-blue-700 dark:text-blue-300 flex items-center justify-center font-bold border border-blue-200/60 dark:border-blue-800/60">
                 {task.assignee_name ? task.assignee_name.charAt(0) : <User className="w-4 h-4" />}
               </div>
             )}
             <div>
-              <div className="text-slate-400">Assignee</div>
-              <div className="font-semibold text-slate-800 text-sm">
+              <div className="text-slate-400 dark:text-slate-500">Assignee</div>
+              <div className="font-semibold text-slate-800 dark:text-slate-200 text-sm">
                 {task.assignee_name || 'Unassigned'}
               </div>
             </div>
           </div>
 
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-full bg-slate-100 text-slate-500 flex items-center justify-center">
+            <div className="w-9 h-9 rounded-full bg-slate-100 dark:bg-slate-700 text-slate-500 dark:text-slate-400 flex items-center justify-center">
               <Clock className="w-4 h-4" />
             </div>
             <div>
-              <div className="text-slate-400">Created Timestamp</div>
-              <div className="font-semibold text-slate-800 text-sm">
+              <div className="text-slate-400 dark:text-slate-500">Created Timestamp</div>
+              <div className="font-semibold text-slate-800 dark:text-slate-200 text-sm">
                 {formatDateTime(task.created_at)}
               </div>
             </div>
@@ -214,7 +214,7 @@ export function TaskDetailPage({
       </div>
 
       {/* Embedded Comments Thread */}
-      <div className="bg-white p-6 sm:p-8 rounded-2xl border border-slate-200 shadow-sm">
+      <div className="bg-white dark:bg-slate-800 p-6 sm:p-8 rounded-2xl border border-slate-200 dark:border-slate-700 shadow-xs transition-colors">
         <CommentSection
           comments={task.comments || []}
           onAddComment={handleAddComment}

@@ -136,99 +136,101 @@ function DashboardApp() {
   };
 
   return (
-    <Layout
-      currentTab={currentTab}
-      onSelectTab={(tab) => {
-        setCurrentTab(tab);
-        setSelectedTaskId(null);
-      }}
-      counts={{ total: pagination.total }}
-      onOpenCreateTask={() => handleOpenCreateTask()}
-      onOpenAuthModal={() => setIsAuthModalOpen(true)}
-    >
-      {/* Page Switching */}
-      {selectedTaskId ? (
-        <TaskDetailPage
-          taskId={selectedTaskId}
-          onBack={() => setSelectedTaskId(null)}
-          onEdit={(task) => handleOpenEditTask(task)}
-          onDelete={(task) => setDeletingTask(task)}
-          onPatchStatus={tasksHook.patchTaskStatus}
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 font-sans antialiased transition-colors duration-200">
+      <Layout
+        currentTab={currentTab}
+        onSelectTab={(tab) => {
+          setCurrentTab(tab);
+          setSelectedTaskId(null);
+        }}
+        counts={{ total: pagination.total }}
+        onOpenCreateTask={() => handleOpenCreateTask()}
+        onOpenAuthModal={() => setIsAuthModalOpen(true)}
+      >
+        {/* Page Switching */}
+        {selectedTaskId ? (
+          <TaskDetailPage
+            taskId={selectedTaskId}
+            onBack={() => setSelectedTaskId(null)}
+            onEdit={(task) => handleOpenEditTask(task)}
+            onDelete={(task) => setDeletingTask(task)}
+            onPatchStatus={tasksHook.patchTaskStatus}
+          />
+        ) : currentTab === 'dashboard' ? (
+          <DashboardPage
+            onSelectTab={setCurrentTab}
+            onSelectTask={handleSelectTask}
+            onOpenCreateTask={() => handleOpenCreateTask()}
+            onFilterByStatus={handleFilterByStatus}
+          />
+        ) : currentTab === 'tasks' ? (
+          <TasksPage
+            useTasksHook={tasksHook}
+            onOpenCreateTask={handleOpenCreateTask}
+            onEditTask={handleOpenEditTask}
+            onDeleteTask={(task) => setDeletingTask(task)}
+            onSelectTask={handleSelectTask}
+          />
+        ) : currentTab === 'external-users' ? (
+          <ExternalUsersPage />
+        ) : currentTab === 'audit-logs' ? (
+          <AuditLogsPage onSelectTask={handleSelectTask} />
+        ) : null}
+
+        {/* Create / Edit Task Modal */}
+        <TaskModal
+          isOpen={isTaskModalOpen}
+          onClose={() => {
+            setIsTaskModalOpen(false);
+            setEditingTask(null);
+          }}
+          onSubmit={handleSaveTask}
+          initialData={editingTask}
+          isLoading={isSubmittingTask}
         />
-      ) : currentTab === 'dashboard' ? (
-        <DashboardPage
-          onSelectTab={setCurrentTab}
-          onSelectTask={handleSelectTask}
-          onOpenCreateTask={() => handleOpenCreateTask()}
-          onFilterByStatus={handleFilterByStatus}
+
+        {/* Task Detail Drawer / Modal */}
+        <TaskDetailDrawer
+          isOpen={isDrawerOpen}
+          onClose={() => {
+            setIsDrawerOpen(false);
+            setDrawerTask(null);
+          }}
+          task={drawerTask}
+          onEdit={(task) => {
+            setIsDrawerOpen(false);
+            handleOpenEditTask(task);
+          }}
+          onDelete={(task) => {
+            if (!isAdmin) {
+              toast.error('Only Admins can delete tasks');
+              return;
+            }
+            setDeletingTask(task);
+          }}
+          onPatchStatus={handlePatchStatusInDrawer}
+          onAddComment={handleAddCommentToDrawer}
         />
-      ) : currentTab === 'tasks' ? (
-        <TasksPage
-          useTasksHook={tasksHook}
-          onOpenCreateTask={handleOpenCreateTask}
-          onEditTask={handleOpenEditTask}
-          onDeleteTask={(task) => setDeletingTask(task)}
-          onSelectTask={handleSelectTask}
+
+        {/* Auth Modal (Login / Register / Demo) */}
+        <AuthModal
+          isOpen={isAuthModalOpen}
+          onClose={() => setIsAuthModalOpen(false)}
         />
-      ) : currentTab === 'external-users' ? (
-        <ExternalUsersPage />
-      ) : currentTab === 'audit-logs' ? (
-        <AuditLogsPage onSelectTask={handleSelectTask} />
-      ) : null}
 
-      {/* Create / Edit Task Modal */}
-      <TaskModal
-        isOpen={isTaskModalOpen}
-        onClose={() => {
-          setIsTaskModalOpen(false);
-          setEditingTask(null);
-        }}
-        onSubmit={handleSaveTask}
-        initialData={editingTask}
-        isLoading={isSubmittingTask}
-      />
-
-      {/* Task Detail Drawer / Modal */}
-      <TaskDetailDrawer
-        isOpen={isDrawerOpen}
-        onClose={() => {
-          setIsDrawerOpen(false);
-          setDrawerTask(null);
-        }}
-        task={drawerTask}
-        onEdit={(task) => {
-          setIsDrawerOpen(false);
-          handleOpenEditTask(task);
-        }}
-        onDelete={(task) => {
-          if (!isAdmin) {
-            toast.error('Only Admins can delete tasks');
-            return;
-          }
-          setDeletingTask(task);
-        }}
-        onPatchStatus={handlePatchStatusInDrawer}
-        onAddComment={handleAddCommentToDrawer}
-      />
-
-      {/* Auth Modal (Login / Register / Demo) */}
-      <AuthModal
-        isOpen={isAuthModalOpen}
-        onClose={() => setIsAuthModalOpen(false)}
-      />
-
-      {/* Delete Confirmation Modal */}
-      <ConfirmModal
-        isOpen={Boolean(deletingTask)}
-        onClose={() => setDeletingTask(null)}
-        onConfirm={handleConfirmDelete}
-        title="Delete Task"
-        message={`Are you sure you want to permanently remove "${deletingTask?.title}"? This action is recorded in the system audit logs.`}
-        confirmText="Delete Task"
-        variant="danger"
-        isLoading={isDeletingTask}
-      />
-    </Layout>
+        {/* Delete Confirmation Modal */}
+        <ConfirmModal
+          isOpen={Boolean(deletingTask)}
+          onClose={() => setDeletingTask(null)}
+          onConfirm={handleConfirmDelete}
+          title="Delete Task"
+          message={`Are you sure you want to permanently remove "${deletingTask?.title}"? This action is recorded in the system audit logs.`}
+          confirmText="Delete Task"
+          variant="danger"
+          isLoading={isDeletingTask}
+        />
+      </Layout>
+    </div>
   );
 }
 

@@ -41,8 +41,8 @@ export function CommentSection({
     <div className="space-y-6">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <MessageSquare className="w-4 h-4 text-slate-500" />
-          <h4 className="text-sm font-semibold text-slate-900">
+          <MessageSquare className="w-4 h-4 text-slate-500 dark:text-slate-400" />
+          <h4 className="text-sm font-semibold text-slate-900 dark:text-slate-100">
             Discussion & Activity Notes ({comments.length})
           </h4>
         </div>
@@ -51,23 +51,23 @@ export function CommentSection({
       {/* Timeline Stream */}
       <div className="space-y-4 max-h-96 overflow-y-auto pr-1">
         {comments.length === 0 ? (
-          <div className="p-6 text-center rounded-xl bg-slate-50 border border-dashed border-slate-200 text-xs text-slate-500">
+          <div className="p-6 text-center rounded-xl bg-slate-50 dark:bg-slate-800/40 border border-dashed border-slate-200 dark:border-slate-800 text-xs text-slate-500 dark:text-slate-400 transition-colors">
             No activity notes recorded yet. Be the first to leave a comment!
           </div>
         ) : (
           comments.map((comment) => (
             <div
               key={comment.id}
-              className="flex items-start gap-3 p-3.5 rounded-xl bg-slate-50/80 border border-slate-100 transition-colors"
+              className="flex items-start gap-3 p-3.5 rounded-xl bg-slate-50/80 dark:bg-slate-800/60 border border-slate-100 dark:border-slate-800/80 transition-colors"
             >
               {comment.user_avatar ? (
                 <img
                   src={comment.user_avatar}
                   alt={comment.user_name || 'User'}
-                  className="w-8 h-8 rounded-full object-cover shrink-0 ring-1 ring-slate-200 mt-0.5"
+                  className="w-8 h-8 rounded-full object-cover shrink-0 ring-1 ring-slate-200 dark:ring-slate-700 mt-0.5"
                 />
               ) : (
-                <div className="w-8 h-8 rounded-full bg-blue-100 text-blue-700 font-bold flex items-center justify-center text-xs shrink-0 mt-0.5">
+                <div className="w-8 h-8 rounded-full bg-blue-100 dark:bg-blue-900/60 text-blue-700 dark:text-blue-300 font-bold flex items-center justify-center text-xs shrink-0 mt-0.5">
                   {comment.user_name ? comment.user_name.charAt(0) : <User className="w-4 h-4" />}
                 </div>
               )}
@@ -75,19 +75,19 @@ export function CommentSection({
               <div className="flex-1 min-w-0">
                 <div className="flex items-center justify-between gap-2">
                   <div className="flex items-center gap-2">
-                    <span className="text-xs font-bold text-slate-900">{comment.user_name}</span>
+                    <span className="text-xs font-bold text-slate-900 dark:text-slate-100">{comment.user_name}</span>
                     {comment.user_role && (
-                      <span className="text-[10px] px-1.5 py-0.2 rounded bg-slate-200/80 text-slate-700 font-medium">
+                      <span className="text-[10px] px-1.5 py-0.2 rounded bg-slate-200/80 dark:bg-slate-700/80 text-slate-700 dark:text-slate-300 font-medium">
                         {comment.user_role}
                       </span>
                     )}
                   </div>
-                  <span className="text-[11px] text-slate-400 shrink-0">
+                  <span className="text-[11px] text-slate-400 dark:text-slate-500 shrink-0">
                     {formatRelativeTime(comment.created_at)}
                   </span>
                 </div>
 
-                <p className="text-xs text-slate-700 mt-1.5 leading-relaxed whitespace-pre-wrap">
+                <p className="text-xs text-slate-700 dark:text-slate-300 mt-1.5 leading-relaxed whitespace-pre-wrap">
                   {comment.comment}
                 </p>
               </div>
@@ -97,15 +97,15 @@ export function CommentSection({
       </div>
 
       {/* Add Comment Input Form */}
-      <form onSubmit={handleSubmit} className="space-y-3 pt-2 border-t border-slate-100">
-        <div className="flex items-center gap-2 text-xs text-slate-500">
+      <form onSubmit={handleSubmit} className="space-y-3 pt-2 border-t border-slate-100 dark:border-slate-800">
+        <div className="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
           <span>Posting as:</span>
-          <span className="font-semibold text-slate-800 flex items-center gap-1.5">
+          <span className="font-semibold text-slate-800 dark:text-slate-200 flex items-center gap-1.5">
             {currentUser?.avatar_url && (
               <img
                 src={currentUser.avatar_url}
                 alt={currentUser.name}
-                className="w-4 h-4 rounded-full object-cover"
+                className="w-4 h-4 rounded-full object-cover ring-1 ring-slate-200 dark:ring-slate-700"
               />
             )}
             {currentUser?.name || 'Anonymous User'}
@@ -118,7 +118,7 @@ export function CommentSection({
             value={commentText}
             onChange={(e) => setCommentText(e.target.value)}
             placeholder="Add an update, progress note, or mention a blocker..."
-            className="w-full text-xs sm:text-sm rounded-xl border border-slate-300 bg-white p-3 pr-10 text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 transition-all"
+            className="w-full text-xs sm:text-sm rounded-xl border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900/90 p-3 pr-10 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500/20 dark:focus:ring-blue-500/30 focus:border-blue-500 dark:focus:border-blue-500 transition-all"
             disabled={isSubmitting}
           />
         </div>

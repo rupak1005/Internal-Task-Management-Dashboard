@@ -19,37 +19,37 @@ export const Input = forwardRef(function Input(
   return (
     <div className="w-full space-y-1.5">
       {label && (
-        <label htmlFor={inputId} className="block text-xs font-semibold uppercase tracking-wider text-slate-600">
+        <label htmlFor={inputId} className="block text-xs font-semibold uppercase tracking-wider text-slate-600 dark:text-slate-400">
           {label}
-          {required && <span className="text-rose-500 ml-1">*</span>}
+          {required && <span className="text-rose-500 dark:text-rose-400 ml-1">*</span>}
         </label>
       )}
-      <div className="relative rounded-lg shadow-sm">
+      <div className="relative rounded-lg shadow-xs">
         {Icon && (
-          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400 dark:text-slate-500">
             <Icon className="w-4 h-4" />
           </div>
         )}
         <input
           ref={ref}
           id={inputId}
-          className={`block w-full text-sm rounded-lg border bg-white px-3 py-2 text-slate-900 placeholder-slate-400 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500/20 disabled:bg-slate-50 disabled:text-slate-500 disabled:cursor-not-allowed ${
+          className={`block w-full text-sm rounded-lg border bg-white dark:bg-slate-900 px-3 py-2 text-slate-900 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 transition-colors focus:outline-hidden focus:ring-2 focus:ring-blue-500/20 dark:focus:ring-blue-400/20 disabled:bg-slate-50 dark:disabled:bg-slate-800 disabled:text-slate-500 dark:disabled:text-slate-400 disabled:cursor-not-allowed ${
             Icon ? 'pl-9' : ''
           } ${
             error
-              ? 'border-rose-300 focus:border-rose-500 focus:ring-rose-500/20'
-              : 'border-slate-300 hover:border-slate-400 focus:border-blue-500'
+              ? 'border-rose-300 dark:border-rose-800 focus:border-rose-500 dark:focus:border-rose-400 focus:ring-rose-500/20'
+              : 'border-slate-300 dark:border-slate-700 hover:border-slate-400 dark:hover:border-slate-600 focus:border-blue-500 dark:focus:border-blue-400'
           } ${className}`}
           {...props}
         />
       </div>
       {error ? (
-        <div className="flex items-center gap-1 text-xs text-rose-600 animate-fade-in">
+        <div className="flex items-center gap-1 text-xs text-rose-600 dark:text-rose-400 animate-fade-in">
           <AlertCircle className="w-3.5 h-3.5 shrink-0" />
           <span>{error}</span>
         </div>
       ) : helperText ? (
-        <p className="text-xs text-slate-500">{helperText}</p>
+        <p className="text-xs text-slate-500 dark:text-slate-400">{helperText}</p>
       ) : null}
     </div>
   );

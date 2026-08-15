@@ -15,8 +15,8 @@ export function KanbanCard({ task, index, onSelectTask }) {
           onClick={() => onSelectTask(task.id)}
           className={`p-4 rounded-xl bg-white dark:bg-slate-800 border transition-all select-none cursor-pointer ${
             snapshot.isDragging
-              ? 'shadow-xl ring-2 ring-blue-500 border-blue-500 rotate-1 scale-105 z-50'
-              : 'border-slate-200/90 dark:border-slate-700/80 shadow-sm hover:shadow-md hover:border-slate-300 dark:hover:border-slate-600'
+              ? 'shadow-2xl ring-2 ring-blue-500 border-blue-500 rotate-1 scale-[1.02] z-50 dark:bg-slate-800/95 dark:shadow-blue-500/10'
+              : 'border-slate-200/90 dark:border-slate-700/80 shadow-xs hover:shadow-md hover:border-slate-300 dark:hover:border-slate-600'
           }`}
         >
           {/* Header with Grip & Priority */}
@@ -26,7 +26,7 @@ export function KanbanCard({ task, index, onSelectTask }) {
             <div
               {...provided.dragHandleProps}
               onClick={(e) => e.stopPropagation()}
-              className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 cursor-grab active:cursor-grabbing p-0.5"
+              className="text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 cursor-grab active:cursor-grabbing p-0.5 rounded transition-colors"
               title="Drag to reorder or change status"
             >
               <GripVertical className="w-3.5 h-3.5" />

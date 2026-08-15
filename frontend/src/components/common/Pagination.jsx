@@ -36,23 +36,23 @@ export function Pagination({
   return (
     <div className={`flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 py-3 px-2 ${className}`}>
       {/* Left side: Results counter & page limit */}
-      <div className="flex flex-wrap items-center gap-3 text-xs sm:text-sm text-slate-500">
+      <div className="flex flex-wrap items-center gap-3 text-xs sm:text-sm text-slate-500 dark:text-slate-400">
         <div>
-          Showing <span className="font-semibold text-slate-900">{startItem}</span> to{' '}
-          <span className="font-semibold text-slate-900">{endItem}</span> of{' '}
-          <span className="font-semibold text-slate-900">{totalItems}</span> tasks
+          Showing <span className="font-semibold text-slate-900 dark:text-slate-100">{startItem}</span> to{' '}
+          <span className="font-semibold text-slate-900 dark:text-slate-100">{endItem}</span> of{' '}
+          <span className="font-semibold text-slate-900 dark:text-slate-100">{totalItems}</span> tasks
         </div>
 
         {onPageSizeChange && (
-          <div className="flex items-center gap-1.5 pl-3 border-l border-slate-200">
+          <div className="flex items-center gap-1.5 pl-3 border-l border-slate-200 dark:border-slate-800">
             <span>Show</span>
             <select
               value={pageSize}
               onChange={(e) => onPageSizeChange(Number(e.target.value))}
-              className="text-xs rounded-md border border-slate-300 bg-white py-1 px-2 text-slate-700 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500"
+              className="text-xs rounded-md border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-900 py-1 px-2 text-slate-700 dark:text-slate-200 focus:border-blue-500 dark:focus:border-blue-400 focus:outline-hidden focus:ring-1 focus:ring-blue-500 transition-colors"
             >
               {pageSizeOptions.map((size) => (
-                <option key={size} value={size}>
+                <option key={size} value={size} className="bg-white dark:bg-slate-900 text-slate-900 dark:text-slate-100">
                   {size}
                 </option>
               ))}
@@ -90,17 +90,17 @@ export function Pagination({
         <div className="hidden xs:flex items-center gap-1">
           {getPageNumbers().map((page, idx) =>
             page === '...' ? (
-              <span key={`ellipsis-${idx}`} className="px-2 text-xs text-slate-400">
+              <span key={`ellipsis-${idx}`} className="px-2 text-xs text-slate-400 dark:text-slate-500">
                 ...
               </span>
             ) : (
               <button
                 key={`page-${page}`}
                 onClick={() => onPageChange(page)}
-                className={`min-w-[32px] h-8 text-xs font-semibold rounded-lg transition-colors ${
+                className={`min-w-[32px] h-8 text-xs font-semibold rounded-lg transition-colors cursor-pointer ${
                   currentPage === page
-                    ? 'bg-blue-600 text-white shadow-sm shadow-blue-500/20'
-                    : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
+                    ? 'bg-blue-600 dark:bg-blue-500 text-white shadow-xs shadow-blue-500/20'
+                    : 'text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 hover:text-slate-900 dark:hover:text-slate-100'
                 }`}
               >
                 {page}
@@ -109,7 +109,7 @@ export function Pagination({
           )}
         </div>
 
-        <span className="xs:hidden text-xs text-slate-600 font-medium px-2">
+        <span className="xs:hidden text-xs text-slate-600 dark:text-slate-300 font-medium px-2">
           Page {currentPage} of {totalPages}
         </span>
 
