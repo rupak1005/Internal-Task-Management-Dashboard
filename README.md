@@ -1,248 +1,284 @@
-# TaskPilot - Production-Ready Internal Task & Management Dashboard
+# TaskPilot — Enterprise Operations & Task Management Dashboard
 
-A full-stack, modular, and scalable **Internal Task & Operations Management Dashboard** built with **Node.js, Express, PostgreSQL, React, Vite, and Tailwind CSS**.
-
----
-
-## 🌟 Executive Summary & Features
-
-- **📊 Comprehensive Operations Dashboard:**
-  - 6 Real-time Stat Cards: Total Tasks, Pending, In Progress, Completed, Overdue (with warning indicators), and Tasks Assigned to Me.
-  - Workflow Completion progress percentage indicator.
-  - Visual distribution bars for workflow status and priority urgency.
-  - Overdue tasks attention list with direct quick actions.
-  - Recent activity and task updates timeline.
-
-- **📋 High-Performance Task Management:**
-  - Database-level parameterized filtering (Status, Priority, Assignee).
-  - Debounced keyword search across task title and description.
-  - Multi-column server-side sorting (`created_at`, `due_date`, `title`, `priority`, `status`).
-  - Dynamic server-side pagination with custom page limits (5, 10, 20, 50).
-  - Inline quick-action status switcher directly on table rows.
-  - Full CRUD operations with rich modal creation and editing forms.
-
-- **💬 Collaboration & Activity Timeline:**
-  - Chronological note/comment timeline with author avatars, roles, and relative timestamps.
-  - Integrated active user switcher ("Me" toggle) allowing instant switching between team members to test assigned tasks and author attribution.
-
-- **🌐 Resilient External Integration:**
-  - Synchronizes team directory profiles via `/api/external/users` from JSONPlaceholder.
-  - Built-in 5-second timeout, error resilience, retry triggers, and cached fallback directory.
-  - Filter by departments (Engineering, Product, Design, Marketing, etc.).
-
-- **🛡️ Clean Decoupled Architecture:**
-  - Strict separation of concerns across Repositories (data access), Services (business logic), Schemas (Joi request validation), and Routers.
-  - Reusable UI kit (Button, Modal, ConfirmModal, Input, Select, Textarea, Badges, Table, Pagination, Skeleton, EmptyState, Toast).
+A modular, scalable, and resilient **Internal Task & Operations Management Platform** engineered with Node.js (Express), PostgreSQL, React 18, Vite, and Tailwind CSS. Built with clean architecture principles, database-level pagination/filtering, automated CI/CD validation, and full containerization support.
 
 ---
 
-## 🏗️ Architecture & Project Layout
+## 🌟 Architecture Highlights & Capabilities
+
+* **📊 Executive Operations Dashboard**
+* **Real-time Pipeline Aggregations:** 6 stat indicators covering total backlog, pending, in-progress, completed, overdue alerts, and direct personal assignments.
+* **Dynamic Metrics & Urgency Visuals:** Workflow completion percentages, status distribution breakdown bars, and priority urgency meters.
+* **Actionable Overdue Queue:** Dedicated attention list surfacing high-risk deliverables with quick-action resolution controls.
+
+
+* **📋 High-Performance Task Engine**
+* **Database-Level Querying:** Server-side parameterized execution for filtering (status, priority, assignee) preventing SQL injection.
+* **Debounced Full-Text Search:** Optimized title and description querying with client-side debounce hooks.
+* **Multi-Column Sorting & Pagination:** Server-side pagination (`limit`, `page`) with dynamic column ordering (`created_at`, `due_date`, `title`, `priority`, `status`).
+* **Optimistic UI Updates:** Inline row status switches and instant modal feedback for fluid user interaction.
+
+
+* **💬 Collaboration & Identity Context**
+* **Audit Timeline:** Chronological comment and activity feeds with user avatars, system roles, and real-time relative timestamps.
+* **RBAC & User Context Switcher:** Native runtime account toggle allowing developers to inspect active roles, permissions, and assigned backlogs.
+
+
+* **🛡️ Resilient External Integrations**
+* **Fault-Tolerant Directory Sync:** Integrates external user directories (`/api/external/users`) with circuit breaker mechanisms (5-second hard timeouts, retry loops, and in-memory cache fallbacks).
+
+
+* **📐 Clean Architecture & Design System**
+* **Decoupled Backend:** Strict Repository-Service-Controller-Schema (Joi) layered architecture.
+* **Reusable Atomic UI Kit:** Built with accessible Tailwind tokens (Modals, ConfirmDrawers, Tables, Badges, Toast notifications, Skeleton loaders, and Dark Mode themes).
+
+
+
+---
+
+## 🏗️ Monorepo Structure
 
 ```text
-assignment/
+taskpilot/
+├── .github/
+│   └── workflows/
+│       └── ci.yml             # GitHub Actions pipeline (Lint, Test, Docker Build)
 ├── backend/
-│   ├── database/
-│   │   └── database.js          # PostgreSQL connection pool & schema initialization
-│   ├── models/
-│   │   ├── User.js              # User schema definition
-│   │   ├── Task.js              # Task schema & enum definitions
-│   │   └── Comment.js           # Comment schema definition
-│   ├── schemas/
-│   │   ├── user.schema.js       # Joi user validation schemas
-│   │   ├── task.schema.js       # Joi task CRUD, query & status validation schemas
-│   │   └── comment.schema.js    # Joi comment validation schema
-│   ├── repositories/
-│   │   ├── user.repository.js   # User SQL queries
-│   │   ├── task.repository.js   # Task SQL queries (search, filter, sort, pagination)
-│   │   └── comment.repository.js # Comment SQL queries
-│   ├── services/
-│   │   ├── user.service.js      # User business logic
-│   │   ├── task.service.js      # Task business logic & cascade handling
-│   │   ├── dashboard.service.js # Metric aggregations & overdue calculations
-│   │   └── external.service.js  # External API client with timeout & fallback
-│   ├── routes/
-│   │   ├── dashboard.routes.js  # GET /api/dashboard
-│   │   ├── tasks.routes.js      # CRUD & comment endpoints for tasks
-│   │   ├── users.routes.js      # User management endpoints
-│   │   └── external.routes.js   # External API integration endpoint
-│   ├── utils/
-│   │   ├── constants.js         # Statuses, priorities, roles, pagination limits
-│   │   ├── logger.js            # HTTP request logger
-│   │   ├── errorHandler.js      # Centralized error handler
-│   │   └── seeder.js            # Database seeder
-│   ├── tests/
-│   │   └── api.test.js          # Automated endpoint integration test suite
-│   ├── .env.example
-│   ├── server.js                # Express app entrypoint
-│   └── package.json
-│
+│   ├── database/              # PostgreSQL connection pool & schema migrations
+│   ├── models/                # Domain models & enum definitions
+│   ├── schemas/               # Joi request validation schemas
+│   ├── repositories/          # Data access layer (Parameterized SQL queries)
+│   ├── services/              # Business logic, aggregations & external API clients
+│   ├── routes/                # Express router endpoints
+│   ├── utils/                 # Centralized loggers, constants & error handlers
+│   ├── tests/                 # Automated API integration test suite
+│   ├── Dockerfile             # Multi-stage backend container setup
+│   └── server.js              # Application entrypoint
 ├── frontend/
 │   ├── src/
-│   │   ├── components/
-│   │   │   ├── common/          # Atomic reusable UI components (Button, Modal, Table, etc.)
-│   │   │   ├── layout/          # Layout, Sidebar, Header with Active User switcher
-│   │   │   ├── dashboard/       # StatCard, TaskDistribution, RecentActivity
-│   │   │   └── tasks/           # TaskTable, TaskFilters, TaskModal, TaskDetailDrawer, CommentSection
-│   │   ├── pages/
-│   │   │   ├── DashboardPage.jsx     # Overview dashboard
-│   │   │   ├── TasksPage.jsx         # Full task backlog & filters
-│   │   │   ├── TaskDetailPage.jsx    # Standalone task detail view
-│   │   │   └── ExternalUsersPage.jsx # External team sync directory
-│   │   ├── services/            # Axios API abstraction layer
-│   │   ├── context/             # UserContext and ToastContext
-│   │   ├── hooks/               # useTasks, useDebounce
-│   │   ├── utils/               # formatters, constants
-│   │   ├── App.jsx              # Main App router
-│   │   └── index.css            # Tailwind CSS & design tokens
-│   ├── vite.config.js
-│   ├── tailwind.config.js
-│   └── package.json
-│
-├── seed_data.json               # Seed dataset with 5 users, 16 tasks, 10 comments
+│   │   ├── components/        # Reusable UI kit, layouts, dashboard & task modules
+│   │   ├── pages/             # Route views (Dashboard, Tasks, Audit Logs, External Users)
+│   │   ├── context/           # React Contexts (Auth, User, Toast)
+│   │   ├── hooks/             # Custom hooks (useTasks, useDebounce)
+│   │   ├── services/          # Axios API abstraction layer
+│   │   └── App.jsx            # Core application layout & route state
+│   ├── Dockerfile             # Multi-stage production Nginx frontend container
+│   └── vite.config.js         # Vite build configuration
+├── docker-compose.yml         # Production container orchestration
+├── seed_data.json             # Bootstrap seed dataset
 └── README.md
+
 ```
 
 ---
 
-## ⚡ Quickstart Guide
+## ⚡ Quickstart
 
-### Prerequisites
-- **Node.js**: v18+ (tested on Node v26)
-- **PostgreSQL**: PostgreSQL 14+ installed
+### Option 1: Docker Compose (Recommended)
 
-### 1. Database Setup
-If using the bundled local PostgreSQL cluster:
+Spin up the entire stack (PostgreSQL, Express Backend, and Nginx Frontend) with a single command:
+
 ```bash
-# Start local PostgreSQL cluster
-cd backend
-npm run db:start
+docker compose up --build -d
 
-# (Optional) Verify PostgreSQL is accepting connections
-npm run db:status
 ```
 
-### 2. Backend Setup & Seeding
+Access the application at `http://localhost:5173` (or `http://localhost`).
+
+---
+
+### Option 2: Local Development Setup
+
+#### Prerequisites
+
+* **Node.js**: `v18.x` or higher
+* **PostgreSQL**: `v14.x` or higher running on `localhost:5432`
+
+#### 1. Database Configuration
+
+Ensure PostgreSQL is active and create the target database:
+
+```sql
+CREATE DATABASE task_dashboard;
+
+```
+
+#### 2. Backend Setup & Seeding
+
 ```bash
 cd backend
-npm install
 
-# Seed the database with 5 users, 16 tasks, and 10 comments
+# Install dependencies
+npm ci
+
+# Configure environment variables (or rely on defaults in .env.example)
+cp .env.example .env
+
+# Seed database with baseline data (5 users, 16 tasks, 10 comments)
 npm run seed
 
-# Run the automated backend integration test suite
-npm run test
+# Run automated integration test suite
+npm test
 
-# Start the Express server on http://localhost:8000
-npm start
-# Or for dev mode with auto-reload:
+# Start Express server (Default: http://localhost:8000)
 npm run dev
+
 ```
 
-### 3. Frontend Setup
+#### 3. Frontend Setup
+
 ```bash
 cd frontend
-npm install
 
-# Start the Vite development server on http://localhost:5173
+# Install dependencies
+npm ci
+
+# Start Vite development server (Default: http://localhost:5173)
 npm run dev
-```
 
-Visit **`http://localhost:5173`** in your browser.
+```
 
 ---
 
 ## ⚙️ Environment Variables
 
-### Backend (`backend/.env`)
-```env
-PORT=8000
-DATABASE_URL=postgresql://postgres@localhost:5432/task_dashboard
-NODE_ENV=development
+### Backend Config (`backend/.env`)
+
+| Key | Type | Default Value | Description |
+| --- | --- | --- | --- |
+| `PORT` | `Number` | `8000` | Port for Express HTTP server |
+| `DATABASE_URL` | `String` | `postgresql://postgres:postgrespassword@localhost:5432/task_dashboard` | PostgreSQL connection URI |
+| `NODE_ENV` | `String` | `development` | Application runtime environment (`development` / `production` / `test`) |
+| `JWT_SECRET` | `String` | `supersecret_task_dashboard_jwt_key_2026` | Cryptographic secret for auth tokens |
+
+---
+
+## 📡 API Specification
+
+### Operational Health Check
+
+```http
+GET /health
+
+```
+
+**Response (200 OK):**
+
+```json
+{ "status": "UP", "timestamp": "2026-08-15T15:55:41.000Z" }
+
 ```
 
 ---
 
-## 📡 REST API Reference
-
-### Health Check
-- `GET /health` — Returns server health status.
-
 ### 1. Dashboard Metrics
-- **`GET /api/dashboard?user_id={id}`**
-  - **Query Params:** `user_id` (optional, calculates `assigned_to_me` for specified user).
-  - **Returns:** Total tasks, pending, in_progress, completed, blocked, overdue count, completion rate %, status distribution, priority distribution, overdue task items, and recent tasks.
 
-### 2. Tasks CRUD & Filtering
-- **`GET /api/tasks`**
-  - **Query Parameters:**
-    - `status`: `pending` | `in_progress` | `completed` | `blocked`
-    - `priority`: `low` | `medium` | `high` | `urgent`
-    - `assignee`: User ID integer or `unassigned`
-    - `search`: Searches across task `title` and `description` (case-insensitive)
-    - `page`: Page number (default: 1)
-    - `limit`: Items per page (default: 10, max: 100)
-    - `sort_by`: `created_at` | `updated_at` | `due_date` | `title` | `priority` | `status`
-    - `order`: `asc` | `desc`
-  - **Returns:** `{ success: true, data: [...], pagination: { total, page, limit, total_pages, has_next_page, has_prev_page } }`
+```http
+GET /api/dashboard?user_id={id}
 
-- **`GET /api/tasks/:id`**
-  - **Returns:** Single task with assignee details and chronological array of `comments`.
+```
 
-- **`POST /api/tasks`**
-  - **Payload:**
-    ```json
-    {
-      "title": "Migrate database indexes",
-      "description": "Optimize high-traffic query benchmarks",
-      "status": "pending",
-      "priority": "high",
-      "assigned_to": 1,
-      "due_date": "2026-08-25T00:00:00.000Z"
-    }
-    ```
-  - **Validation:** `title` is required (min 3 chars). Returns `400 Bad Request` on validation failure.
-
-- **`PUT /api/tasks/:id`**
-  - **Payload:** Updates any task fields (`title`, `description`, `status`, `priority`, `assigned_to`, `due_date`).
-
-- **`PATCH /api/tasks/:id/status`**
-  - **Payload:** `{ "status": "completed" }`
-  - **Returns:** Updated task object.
-
-- **`DELETE /api/tasks/:id`**
-  - **Returns:** Cascades and deletes associated comments and returns confirmation.
-
-- **`POST /api/tasks/:id/comments`**
-  - **Payload:** `{ "user_id": 1, "comment": "Note text" }`
-  - **Returns:** Created comment with user metadata and timestamp.
-
-### 3. Users Management
-- **`GET /api/users`** — Returns list of team members.
-- **`POST /api/users`** — Creates new user (`{ "name": "...", "email": "...", "role": "Member" }`).
-
-### 4. External Integration
-- **`GET /api/external/users`** — Connects to external API with 5s timeout and fallback cache, returning mapped enterprise team profiles.
+* **Query Parameters:** `user_id` *(optional)* — Computes personal workload metrics (`assigned_to_me`).
+* **Response (200 OK):** Returns pipeline summaries, completion rates, overdue totals, status distributions, and recent audit logs.
 
 ---
 
-## 🧪 Testing & Verification
+### 2. Task Backlog Management
 
-Run the full end-to-end integration test suite:
+#### Query Backlog (Paginated & Filtered)
+
+```http
+GET /api/tasks?status=in_progress&priority=high&search=index&page=1&limit=10&sort_by=due_date&order=asc
+
+```
+
+**Parameters:**
+
+* `status`: `pending` | `in_progress` | `completed` | `blocked`
+* `priority`: `low` | `medium` | `high` | `urgent`
+* `assignee`: User ID (`integer`) or `unassigned`
+* `search`: Full-text substring search on `title` and `description`
+* `page` / `limit`: Pagination parameters (`limit` max: 100)
+* `sort_by`: `created_at` | `updated_at` | `due_date` | `title` | `priority` | `status`
+
+#### Create Task
+
+```http
+POST /api/tasks
+Content-Type: application/json
+
+{
+  "title": "Migrate database indexes",
+  "description": "Optimize high-traffic query benchmarks",
+  "status": "pending",
+  "priority": "high",
+  "assigned_to": 1,
+  "due_date": "2026-08-25T00:00:00.000Z"
+}
+
+```
+
+#### Quick Patch Status
+
+```http
+PATCH /api/tasks/:id/status
+Content-Type: application/json
+
+{ "status": "completed" }
+
+```
+
+#### Cascade Delete Task
+
+```http
+DELETE /api/tasks/:id
+
+```
+
+---
+
+### 3. Collaboration Thread
+
+```http
+POST /api/tasks/:id/comments
+Content-Type: application/json
+
+{
+  "user_id": 1,
+  "comment": "Database index optimization applied successfully."
+}
+
+```
+
+---
+
+### 4. Resilient External User Directory
+
+```http
+GET /api/external/users
+
+```
+
+* Queries external enterprise user directory with exponential retries and fallback caching.
+
+---
+
+## 🧪 Automated Testing & Quality Assurance
+
+The backend repository includes an automated integration testing harness using Node's test framework.
+
 ```bash
 cd backend
 npm test
+
 ```
 
-### Verified Test Cases:
-1. `GET /health` (200 OK)
-2. `GET /api/dashboard` (Metrics, overdue counts, distributions)
-3. `GET /api/users` & `POST /api/users` (Seeding & user creation)
-4. `GET /api/tasks?page=1&limit=5` (SQL-level pagination boundaries)
-5. `GET /api/tasks?status=in_progress` & `GET /api/tasks?priority=urgent` (Filtering)
-6. `GET /api/tasks?search=database` (Case-insensitive keyword search)
-7. `POST /api/tasks` validation error handling (Missing title yields 400 with details)
-8. `POST /api/tasks`, `GET /api/tasks/:id`, `PUT /api/tasks/:id`, `PATCH /api/tasks/:id/status`
-9. `POST /api/tasks/:id/comments` (Comment timeline thread)
-10. `DELETE /api/tasks/:id` (Cascading delete & 404 verification)
-11. `GET /api/external/users` (Resilient external API integration)
-12. Frontend production bundle build (`npm run build`)
+### End-to-End Suite Coverage:
+
+1. **Health Verification:** Ensures DB connection pool and HTTP server health.
+2. **Aggregations & Metrics:** Validates statistical calculations and overdue threshold logic.
+3. **Data Access Boundaries:** Tests SQL limit/offset pagination limits and invalid query handling.
+4. **Validation Pipeline:** Asserts Joi schema rejection (`400 Bad Request`) on invalid payloads.
+5. **State Transitions:** Tests lifecycle flow (`POST` -> `GET` -> `PUT` -> `PATCH` -> `DELETE`).
+6. **Thread Cascade Cleanup:** Verifies orphan removal of task-related comments on task deletion.
+7. **External Resilience:** Validates fallback behavior during external API outages.
