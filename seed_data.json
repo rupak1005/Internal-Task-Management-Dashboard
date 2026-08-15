@@ -1,0 +1,216 @@
+{
+  "users": [
+    {
+      "name": "Sarah Chen",
+      "email": "sarah.chen@enterprise.io",
+      "role": "Admin",
+      "avatar_url": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150&auto=format&fit=crop&q=80"
+    },
+    {
+      "name": "Alex Rivera",
+      "email": "alex.rivera@enterprise.io",
+      "role": "Member",
+      "avatar_url": "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80"
+    },
+    {
+      "name": "Priya Patel",
+      "email": "priya.patel@enterprise.io",
+      "role": "Member",
+      "avatar_url": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80"
+    },
+    {
+      "name": "Marcus Vance",
+      "email": "marcus.vance@enterprise.io",
+      "role": "Member",
+      "avatar_url": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150&auto=format&fit=crop&q=80"
+    },
+    {
+      "name": "Elena Rostova",
+      "email": "elena.rostova@enterprise.io",
+      "role": "Admin",
+      "avatar_url": "https://images.unsplash.com/photo-1544005313-94ddf0286df2?w=150&auto=format&fit=crop&q=80"
+    }
+  ],
+  "tasks": [
+    {
+      "title": "Migrate database indexing to optimize high-traffic queries",
+      "description": "Composite indexes need to be created on `tasks(status, priority)` and `comments(task_id)` to handle sub-10ms query benchmarks under 100k records.",
+      "status": "in_progress",
+      "priority": "urgent",
+      "assigned_to_email": "sarah.chen@enterprise.io",
+      "due_offset_days": -2
+    },
+    {
+      "title": "Fix memory leak in websocket event dispatcher",
+      "description": "Subscriptions are not being dereferenced upon client disconnect leading to gradual RSS memory buildup.",
+      "status": "blocked",
+      "priority": "urgent",
+      "assigned_to_email": "alex.rivera@enterprise.io",
+      "due_offset_days": -1
+    },
+    {
+      "title": "Implement Stripe webhook idempotency key handling",
+      "description": "Ensure incoming duplicate payment events are safely ignored and recorded in the audit event log.",
+      "status": "in_progress",
+      "priority": "high",
+      "assigned_to_email": "priya.patel@enterprise.io",
+      "due_offset_days": 3
+    },
+    {
+      "title": "Redesign workspace settings & team member invitation modal",
+      "description": "Modernize the settings dashboard with Tailwind CSS tabs, role selectors (Admin/Member), and batch invite capability.",
+      "status": "pending",
+      "priority": "medium",
+      "assigned_to_email": "marcus.vance@enterprise.io",
+      "due_offset_days": 7
+    },
+    {
+      "title": "Complete SOC2 Type II compliance evidence export",
+      "description": "Collect infrastructure logs, access review timestamps, and encryption verification proofs for external auditor review.",
+      "status": "completed",
+      "priority": "high",
+      "assigned_to_email": "elena.rostova@enterprise.io",
+      "due_offset_days": -5
+    },
+    {
+      "title": "Optimize frontend bundle size & code splitting",
+      "description": "Dynamic import heavy charting libraries and Lucide icons to reduce initial JS payload under 120kb gzipped.",
+      "status": "in_progress",
+      "priority": "medium",
+      "assigned_to_email": "alex.rivera@enterprise.io",
+      "due_offset_days": 5
+    },
+    {
+      "title": "Implement API rate limiting and token bucket throttling",
+      "description": "Enforce 100 req/min for public REST endpoints and 500 req/min for authenticated internal tokens with 429 response codes.",
+      "status": "pending",
+      "priority": "high",
+      "assigned_to_email": "sarah.chen@enterprise.io",
+      "due_offset_days": 4
+    },
+    {
+      "title": "Fix Safari iOS Safari 100vh viewport height rendering bug",
+      "description": "Sticky bottom action bars are being obscured by mobile browser navigation chrome.",
+      "status": "completed",
+      "priority": "low",
+      "assigned_to_email": "marcus.vance@enterprise.io",
+      "due_offset_days": -10
+    },
+    {
+      "title": "Configure Redis cluster for distributed session caching",
+      "description": "Provision high-availability multi-AZ Redis instance with automatic failover and TLS in-transit encryption.",
+      "status": "blocked",
+      "priority": "high",
+      "assigned_to_email": "elena.rostova@enterprise.io",
+      "due_offset_days": -3
+    },
+    {
+      "title": "Design dark mode aesthetic color tokens & contrast accessibility",
+      "description": "Ensure WCAG AAA compliance across all typography and interactive status badges in dark/light themes.",
+      "status": "completed",
+      "priority": "low",
+      "assigned_to_email": "priya.patel@enterprise.io",
+      "due_offset_days": -4
+    },
+    {
+      "title": "Implement CSV & JSON export for task analytics",
+      "description": "Allow team leads to export filtered task lists with custom date ranges into spreadsheet-friendly formats.",
+      "status": "pending",
+      "priority": "low",
+      "assigned_to_email": null,
+      "due_offset_days": 12
+    },
+    {
+      "title": "Audit third-party npm package vulnerabilities & dependabot alerts",
+      "description": "Review and patch transitive dependency security advisories in root and service modules.",
+      "status": "in_progress",
+      "priority": "medium",
+      "assigned_to_email": "sarah.chen@enterprise.io",
+      "due_offset_days": 2
+    },
+    {
+      "title": "Implement multi-select batch status updates",
+      "description": "Allow users to check multiple task rows in the table and change statuses or assignees in bulk.",
+      "status": "pending",
+      "priority": "medium",
+      "assigned_to_email": "alex.rivera@enterprise.io",
+      "due_offset_days": 9
+    },
+    {
+      "title": "Build external user sync integration with resilient circuit breaker",
+      "description": "Integrate third-party partner directory API with automatic timeout fallbacks and enterprise card rendering.",
+      "status": "completed",
+      "priority": "high",
+      "assigned_to_email": "priya.patel@enterprise.io",
+      "due_offset_days": -1
+    },
+    {
+      "title": "Set up automated E2E Cypress regression suite on CI/CD",
+      "description": "Automate core user journeys (task creation, comment timeline, status filter switching) on pull requests.",
+      "status": "pending",
+      "priority": "low",
+      "assigned_to_email": null,
+      "due_offset_days": 15
+    },
+    {
+      "title": "Refactor error boundary components and global toast alerts",
+      "description": "Catch React render exceptions gracefully with retry triggers and inline error notification dismissals.",
+      "status": "in_progress",
+      "priority": "medium",
+      "assigned_to_email": "marcus.vance@enterprise.io",
+      "due_offset_days": 6
+    }
+  ],
+  "comments": [
+    {
+      "task_index": 0,
+      "user_email": "sarah.chen@enterprise.io",
+      "comment": "Completed the index benchmark analysis. Adding B-tree index on (status, priority) dropped query times from 42ms down to 1.8ms!"
+    },
+    {
+      "task_index": 0,
+      "user_email": "alex.rivera@enterprise.io",
+      "comment": "Impressive! Are we rolling this out to staging this afternoon?"
+    },
+    {
+      "task_index": 0,
+      "user_email": "sarah.chen@enterprise.io",
+      "comment": "Yes, staging migration scheduled for 3 PM UTC."
+    },
+    {
+      "task_index": 1,
+      "user_email": "alex.rivera@enterprise.io",
+      "comment": "Isolated the leak to unhandled 'disconnect' events in socket-manager.js. Blocked waiting for core socket library patch."
+    },
+    {
+      "task_index": 1,
+      "user_email": "elena.rostova@enterprise.io",
+      "comment": "Let's apply a temporary connection reaper every 5 minutes until upstream publishes the fix."
+    },
+    {
+      "task_index": 2,
+      "user_email": "priya.patel@enterprise.io",
+      "comment": "Stripe webhook signature validation implemented with raw request buffer."
+    },
+    {
+      "task_index": 2,
+      "user_email": "sarah.chen@enterprise.io",
+      "comment": "Make sure we test replay attacks using Stripe CLI test fixtures."
+    },
+    {
+      "task_index": 4,
+      "user_email": "elena.rostova@enterprise.io",
+      "comment": "All SOC2 audit logs exported and uploaded to Drata portal. Auditor has approved section 4.1."
+    },
+    {
+      "task_index": 5,
+      "user_email": "alex.rivera@enterprise.io",
+      "comment": "Switched Lucide imports to tree-shakable named paths. Bundle size decreased by 34%."
+    },
+    {
+      "task_index": 8,
+      "user_email": "elena.rostova@enterprise.io",
+      "comment": "AWS VPC peering connection between application cluster and Redis subnet is currently pending approval."
+    }
+  ]
+}

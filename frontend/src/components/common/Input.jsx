@@ -1,0 +1,56 @@
+import React, { forwardRef } from 'react';
+import { AlertCircle } from 'lucide-react';
+
+export const Input = forwardRef(function Input(
+  {
+    label,
+    error,
+    helperText,
+    icon: Icon,
+    className = '',
+    required = false,
+    id,
+    ...props
+  },
+  ref
+) {
+  const inputId = id || (label ? label.toLowerCase().replace(/\s+/g, '-') : undefined);
+
+  return (
+    <div className="w-full space-y-1.5">
+      {label && (
+        <label htmlFor={inputId} className="block text-xs font-semibold uppercase tracking-wider text-slate-600">
+          {label}
+          {required && <span className="text-rose-500 ml-1">*</span>}
+        </label>
+      )}
+      <div className="relative rounded-lg shadow-sm">
+        {Icon && (
+          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
+            <Icon className="w-4 h-4" />
+          </div>
+        )}
+        <input
+          ref={ref}
+          id={inputId}
+          className={`block w-full text-sm rounded-lg border bg-white px-3 py-2 text-slate-900 placeholder-slate-400 transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500/20 disabled:bg-slate-50 disabled:text-slate-500 disabled:cursor-not-allowed ${
+            Icon ? 'pl-9' : ''
+          } ${
+            error
+              ? 'border-rose-300 focus:border-rose-500 focus:ring-rose-500/20'
+              : 'border-slate-300 hover:border-slate-400 focus:border-blue-500'
+          } ${className}`}
+          {...props}
+        />
+      </div>
+      {error ? (
+        <div className="flex items-center gap-1 text-xs text-rose-600 animate-fade-in">
+          <AlertCircle className="w-3.5 h-3.5 shrink-0" />
+          <span>{error}</span>
+        </div>
+      ) : helperText ? (
+        <p className="text-xs text-slate-500">{helperText}</p>
+      ) : null}
+    </div>
+  );
+});
